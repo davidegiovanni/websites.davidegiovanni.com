@@ -143,7 +143,7 @@ export default function Index() {
     <div className="h-full w-full relative overflow-y-auto bg-gray-700 p-[4vmin]">
       <div className="h-full w-full rounded-[6rem] overflow-hidden isolate bg-gray-600 flex items-center justify-center">
         <div className="h-full w-full overflow-y-hidden flex items-center justify-center">
-          <div className="h-full w-full flex-1 grid grid-cols-1 lg:grid-cols-3 gap-0 origin-center -translate-y-12 scale-125">
+          <div className="h-full w-full flex-1 grid grid-cols-1 lg:grid-cols-3 gap-0 origin-center lg:-translate-y-12 scale-125">
             <div className="hidden lg:block h-full">
               <img src="/shared/left-header.png" className="w-full" alt="" />
             </div>

@@ -2,7 +2,7 @@ import { json, LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/no
 import { Link, NavLink, Outlet, useCatch, useLoaderData, useLocation, useParams } from "@remix-run/react";
 import { safeGet } from "~/utils/safe-post";
 import { loadTranslations } from "~/helpers/i18n";
-import { WebPageModel, WebSectionModel } from "api/models";
+import { Feed, FeedItem, WebPageModel, WebSectionModel } from "api/models";
 import metadata from '~/utils/metadata'
 import link from '~/utils/links'
 import { fluidType } from '~/utils/helpers'
@@ -55,6 +55,7 @@ type LoaderData = {
   primary: string;
   secondary: string;
   host: string;
+  features: FeedItem[];
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -87,6 +88,17 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const mainSection: WebSectionModel = page.sections[0]
   const sections: WebSectionModel[] = page.sections.slice(1)
 
+  const [featuresFeedRes, featuresFeedErr] = await safeGet<any>(request, `https://cdn.revas.app/contents/v0/directories/websites-features/feed.json?public_key=01exy3y9j9pdvyzhchkpj9vc5w`)
+  if (featuresFeedErr !== null) {
+    throw new Response(`API Feed: ${featuresFeedErr.message}, ${featuresFeedErr.code}`, {
+      status: 404,
+    });
+  }
+
+  const featuresFeed: Feed = featuresFeedRes
+
+  const features: FeedItem[] = featuresFeed.items
+
   const loaderData: LoaderData = {
     i18n,
     page,
@@ -95,7 +107,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     primary,
     secondary,
     logo,
-    host: host
+    host,
+    features
   }
 
   return json(loaderData)
@@ -109,18 +122,19 @@ export default function Index() {
   const mainSection = loaderData.mainSection
   const sections = loaderData.sections
   const logo = loaderData.logo
+  const features = loaderData.features
 
   function buildSrcset(url: any, format: string): any {
     const u = url.replace('cdn.revas.app', 'static.eu1.revas-cdn.com')
     const sizes = [600, 800, 1024, 1280, 1536];
-    const densities = [1, 2,3];
+    const densities = [1, 2, 3];
     const urls = densities.map(
       (density) => `url("${u}?format=${format}&size=${density === 1 ? '1024' : density === 2 ? '1280' : '1536'}w") ${density}x`
     );
     return urls.join(",");
   }
 
-  function getLanguageName (lang: string) {
+  function getLanguageName(lang: string) {
     switch (lang) {
       case 'it-IT':
         return 'Italiano'
@@ -139,27 +153,155 @@ export default function Index() {
 
   const isOutletPageOpen = false
 
+  const headerImages = {
+    left: sections[0].image,
+    top: sections[1].image,
+    bottom: sections[2].image,
+    right: sections[3].image
+  }
+
   return (
-    <div className="h-full w-full relative overflow-y-auto bg-gray-700 p-[4vmin]">
-      <div className="h-full w-full rounded-[6rem] overflow-hidden isolate bg-gray-600 flex items-center justify-center">
-        <div className="h-full w-full overflow-y-hidden flex items-center justify-center">
-          <div className="h-full w-full flex-1 grid grid-cols-1 lg:grid-cols-3 gap-0 origin-center lg:-translate-y-12 scale-125">
-            <div className="hidden lg:block h-full">
-              <img src="/shared/left-header.png" className="w-full" alt="" />
+    <div className="overflow-y-auto bg-gray-700 h-full w-full">
+      <div className="h-screen w-full  p-[4vmin] relative">
+        <div className="h-full w-full relative rounded-3xl lg:rounded-[6rem] overflow-hidden isolate bg-gray-600">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 origin-center lg:-translate-y-16 scale-110 absolute inset-0">
+            <div className="hidden lg:block">
+              <img src={headerImages.left} className="w-full" alt="" />
             </div>
             <div className="h-full flex flex-col justify-between">
-              <img src="/shared/bottom-header.png" className="w-full" alt="" />
+              <img src={headerImages.top} className="w-full" alt="" />
               <div className="flex-1 flex items-center justify-center px-[4vmin]">
-                <h1 className="font-semibold text-center text-gray-200" style={{fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
-                  { mainSection.title }
+                <h1 className="font-semibold text-center text-gray-200" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
+                  {mainSection.title}
                 </h1>
               </div>
-              <img src="/shared/top-header.png" className="w-full" alt="" />
+              <img src={headerImages.bottom} className="w-full" alt="" />
             </div>
             <div className="hidden lg:block h-full">
-              <img src="/shared/right-header.png" className="w-full" alt="" />
+              <img src={headerImages.right} className="w-full" alt="" />
             </div>
           </div>
+        </div>
+      </div>
+      <div className="grid grid-cols-12 gap-[4vmin] px-[4vmin] pb-[4vmin]">
+        <div className="rounded-3xl lg:rounded-[3rem] col-span-12 lg:col-span-8 bg-gray-600 overflow-hidden isolate flex flex-col justify-between">
+          <div className="aspect-[2/1] relative">
+            <Attachment attachment={{
+              id: "",
+              mediaType: "image/",
+              url: features[0].image,
+              description: ""
+            }}></Attachment>
+          </div>
+          <h2 className="font-medium text-center text-gray-200 w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
+            {features[0].title}
+          </h2>
+        </div>
+        <div className="rounded-3xl lg:rounded-[3rem] col-span-12 lg:col-span-4  bg-gray-600 overflow-hidden isolate flex flex-col justify-between">
+          <div className="aspect-[1/1] relative">
+          <Attachment attachment={{
+              id: "",
+              mediaType: "image/",
+              url: features[1].image,
+              description: ""
+            }}></Attachment>
+          </div>
+          <h2 className="font-medium text-center text-gray-200 w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
+            {features[1].title}
+          </h2>
+        </div>
+        <div className="col-span-12 lg:col-span-4 h-full flex flex-col">
+          <div className="flex-1 rounded-3xl lg:rounded-[3rem] bg-gray-600 overflow-hidden isolate mb-[4vmin] flex flex-col justify-between">
+            <div className="aspect-[2/1]">
+            <Attachment attachment={{
+              id: "",
+              mediaType: "image/",
+              url: features[2].image,
+              description: ""
+            }}></Attachment>
+            </div>
+            <h2 className="font-medium text-center text-gray-200 w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
+              {features[2].title}
+            </h2>
+          </div>
+          <div className="flex-shrink rounded-3xl lg:rounded-[3rem] bg-gray-600 overflow-hidden isolate  flex flex-col justify-between">
+            <div className="aspect-[2/1]">
+            <Attachment attachment={{
+              id: "",
+              mediaType: "image/",
+              url: features[3].image,
+              description: ""
+            }}></Attachment>
+            </div>
+            <h2 className="font-medium text-center text-gray-200 w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
+              {features[3].title}
+            </h2>
+          </div>
+        </div>
+        <div className="rounded-3xl lg:rounded-[3rem] col-span-12 lg:col-span-8 bg-gray-600 overflow-hidden isolate flex items-end relative">
+          <div className="aspect-[2/1] absolute inset-0 h-full w-full">
+          <Attachment attachment={{
+              id: "",
+              mediaType: "image/",
+              url: features[4].image,
+              description: ""
+            }}></Attachment>
+          </div>
+          <h2 className="font-medium text-center text-gray-200 w-11/12 mx-auto px-[4vmin] my-[2vmin] relative z-10" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
+            {features[4].title}
+          </h2>
+        </div>
+        <div className="rounded-3xl lg:rounded-[3rem] col-span-12  bg-[#212121] overflow-hidden isolate flex flex-col justify-between">
+          <div className="aspect-[4/1]">
+          <Attachment attachment={{
+              id: "",
+              mediaType: "image/",
+              url: features[5].image,
+              description: ""
+            }}></Attachment>
+          </div>
+          <h2 className="font-medium text-center text-gray-200 w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
+            {features[5].title}
+          </h2>
+        </div>
+        <div className="rounded-3xl lg:rounded-[3rem] col-span-12 lg:col-span-4 bg-gray-600 overflow-hidden isolate flex flex-col justify-between">
+          <div className="aspect-[2/1]">
+          <Attachment attachment={{
+              id: "",
+              mediaType: "image/",
+              url: features[6].image,
+              description: ""
+            }}></Attachment>
+          </div>
+          <h2 className="font-medium text-center text-gray-200 w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
+            {features[6].title}
+          </h2>
+        </div>
+        <div className="rounded-3xl lg:rounded-[3rem] col-span-12 lg:col-span-4  bg-gray-600 overflow-hidden isolate flex flex-col justify-between">
+          <div className="aspect-[2/1]">
+          <Attachment attachment={{
+              id: "",
+              mediaType: "image/",
+              url: features[7].image,
+              description: ""
+            }}></Attachment>
+          </div>
+          <h2 className="font-medium text-center text-gray-200 w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
+            {features[7].title}
+          </h2>
+        </div>
+        <div className="rounded-3xl lg:rounded-[3rem] col-span-12 lg:col-span-4 bg-gray-600 overflow-hidden isolate flex flex-col justify-between">
+          <div className="aspect-[2/1] ">
+          <Attachment attachment={{
+              id: "",
+              mediaType: "image/",
+              url: features[8].image,
+              description: ""
+            }}></Attachment>
+          </div>
+          <h2 className="font-medium text-center text-gray-200 w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
+            {features[8].title}
+          </h2>
         </div>
       </div>
     </div>

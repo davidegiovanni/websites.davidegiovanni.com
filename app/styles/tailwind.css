@@ -491,6 +491,15 @@ Ensure the default browser behavior of the `hidden` attribute.
   left: 0px;
 }
 
+.inset-x-0 {
+  left: 0px;
+  right: 0px;
+}
+
+.bottom-0 {
+  bottom: 0px;
+}
+
 .isolate {
   isolation: isolate;
 }
@@ -499,8 +508,32 @@ Ensure the default browser behavior of the `hidden` attribute.
   z-index: 10;
 }
 
+.z-30 {
+  z-index: 30;
+}
+
 .col-span-12 {
   grid-column: span 12 / span 12;
+}
+
+.col-span-6 {
+  grid-column: span 6 / span 6;
+}
+
+.col-span-8 {
+  grid-column: span 8 / span 8;
+}
+
+.col-span-4 {
+  grid-column: span 4 / span 4;
+}
+
+.row-span-1 {
+  grid-row: span 1 / span 1;
+}
+
+.row-span-2 {
+  grid-row: span 2 / span 2;
 }
 
 .my-4 {
@@ -522,20 +555,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 1rem;
 }
 
-.mb-\[\] {
-  margin-bottom: ;
-}
-
 .mb-\[4vmin\] {
   margin-bottom: 4vmin;
-}
-
-.mt-\[\] {
-  margin-top: ;
-}
-
-.mt-\[2vmin\] {
-  margin-top: 2vmin;
 }
 
 .block {
@@ -554,54 +575,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: none;
 }
 
-.aspect-\[\] {
-  aspect-ratio: ;
-}
-
-.aspect-\[3\/2\] {
-  aspect-ratio: 3 / 2;
-}
-
-.aspect-\[1\.5\/2\] {
-  aspect-ratio: 1.5 / 2;
-}
-
-.aspect-\[1\/2\] {
-  aspect-ratio: 1 / 2;
-}
-
-.aspect-\[2\/3\] {
-  aspect-ratio: 2 / 3;
-}
-
-.aspect-\[2\.2\/3\] {
-  aspect-ratio: 2.2 / 3;
-}
-
-.aspect-\[1\.8\/3\] {
-  aspect-ratio: 1.8 / 3;
-}
-
-.aspect-\[1\.9\/3\] {
-  aspect-ratio: 1.9 / 3;
-}
-
-.aspect-\[1\.95\/3\] {
-  aspect-ratio: 1.95 / 3;
-}
-
-.aspect-\[1\.94\/3\] {
-  aspect-ratio: 1.94 / 3;
-}
-
-.aspect-\[1\.5\/3\] {
-  aspect-ratio: 1.5 / 3;
-}
-
-.aspect-\[2\] {
-  aspect-ratio: 2;
-}
-
 .aspect-\[2\/1\] {
   aspect-ratio: 2 / 1;
 }
@@ -614,6 +587,30 @@ Ensure the default browser behavior of the `hidden` attribute.
   aspect-ratio: 4 / 1;
 }
 
+.aspect-\[5\/4\] {
+  aspect-ratio: 5 / 4;
+}
+
+.aspect-\[10\/4\] {
+  aspect-ratio: 10 / 4;
+}
+
+.aspect-\[5\/9\] {
+  aspect-ratio: 5 / 9;
+}
+
+.aspect-\[5\/\] {
+  aspect-ratio: 5 / ;
+}
+
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+.aspect-\[\] {
+  aspect-ratio: ;
+}
+
 .h-full {
   height: 100%;
 }
@@ -622,20 +619,20 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 100vh;
 }
 
-.max-h-\[900px\] {
-  max-height: 900px;
-}
-
 .w-full {
   width: 100%;
 }
 
-.w-11 {
-  width: 2.75rem;
-}
-
 .w-11\/12 {
   width: 91.666667%;
+}
+
+.max-w-5xl {
+  max-width: 64rem;
+}
+
+.max-w-6xl {
+  max-width: 72rem;
 }
 
 .flex-1 {
@@ -650,6 +647,31 @@ Ensure the default browser behavior of the `hidden` attribute.
   transform-origin: center;
 }
 
+.-translate-y-12 {
+  --tw-translate-y: -3rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-translate-y-4 {
+  --tw-translate-y: -1rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-x-4 {
+  --tw-translate-x: 1rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-x-2 {
+  --tw-translate-x: 0.5rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-x-1 {
+  --tw-translate-x: 0.25rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .scale-110 {
   --tw-scale-x: 1.1;
   --tw-scale-y: 1.1;
@@ -662,6 +684,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .grid-cols-12 {
   grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.grid-rows-6 {
+  grid-template-rows: repeat(6, minmax(0, 1fr));
+}
+
+.grid-rows-2 {
+  grid-template-rows: repeat(2, minmax(0, 1fr));
 }
 
 .flex-col {
@@ -686,10 +716,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .gap-0 {
   gap: 0px;
-}
-
-.gap-\[3vmin\] {
-  gap: 3vmin;
 }
 
 .gap-\[4vmin\] {
@@ -727,21 +753,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(75 85 99 / var(--tw-bg-opacity));
 }
 
-.bg-red-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
-}
-
-.bg-gray-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
-}
-
-.bg-gray-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
-}
-
 .bg-\[\#212121\] {
   --tw-bg-opacity: 1;
   background-color: rgb(33 33 33 / var(--tw-bg-opacity));
@@ -760,10 +771,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding: 4vmin;
 }
 
-.p-\[\] {
-  padding: ;
-}
-
 .px-\[4vmin\] {
   padding-left: 4vmin;
   padding-right: 4vmin;
@@ -771,6 +778,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pb-\[4vmin\] {
   padding-bottom: 4vmin;
+}
+
+.pb-\[2vmin\] {
+  padding-bottom: 2vmin;
 }
 
 .text-center {
@@ -829,6 +840,10 @@ img {
   /* Remove scrollbar space */
   background: transparent;
   /* Optional: just make scrollbar invisible */
+}
+
+.first-line\:col-span-12::first-line {
+  grid-column: span 12 / span 12;
 }
 
 .selection\:bg-white *::-moz-selection {
@@ -891,21 +906,49 @@ img {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+@media (min-width: 768px) {
+  .md\:col-span-8 {
+    grid-column: span 8 / span 8;
+  }
+
+  .md\:col-span-4 {
+    grid-column: span 4 / span 4;
+  }
+
+  .md\:aspect-\[10\/4\] {
+    aspect-ratio: 10 / 4;
+  }
+
+  .md\:translate-y-0 {
+    --tw-translate-y: 0px;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .md\:translate-x-0 {
+    --tw-translate-x: 0px;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .md\:scale-0 {
+    --tw-scale-x: 0;
+    --tw-scale-y: 0;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .md\:scale-100 {
+    --tw-scale-x: 1;
+    --tw-scale-y: 1;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .md\:rounded-\[3rem\] {
+    border-radius: 3rem;
+  }
+}
+
 @media (min-width: 1024px) {
-  .lg\:col-span-9 {
-    grid-column: span 9 / span 9;
-  }
-
-  .lg\:col-span-3 {
-    grid-column: span 3 / span 3;
-  }
-
-  .lg\:col-span-7 {
-    grid-column: span 7 / span 7;
-  }
-
-  .lg\:col-span-5 {
-    grid-column: span 5 / span 5;
+  .lg\:absolute {
+    position: absolute;
   }
 
   .lg\:col-span-8 {
@@ -916,16 +959,35 @@ img {
     grid-column: span 4 / span 4;
   }
 
-  .lg\:col-span-6 {
-    grid-column: span 6 / span 6;
-  }
-
   .lg\:block {
     display: block;
   }
 
+  .lg\:aspect-\[10\/4\] {
+    aspect-ratio: 10 / 4;
+  }
+
+  .lg\:aspect-\[2\/1\] {
+    aspect-ratio: 2 / 1;
+  }
+
+  .lg\:aspect-auto {
+    aspect-ratio: auto;
+  }
+
   .lg\:-translate-y-16 {
     --tw-translate-y: -4rem;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .lg\:translate-x-0 {
+    --tw-translate-x: 0px;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .lg\:scale-0 {
+    --tw-scale-x: 0;
+    --tw-scale-y: 0;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 
@@ -935,14 +997,6 @@ img {
 
   .lg\:rounded-\[6rem\] {
     border-radius: 6rem;
-  }
-
-  .lg\:rounded-\[5rem\] {
-    border-radius: 5rem;
-  }
-
-  .lg\:rounded-\[4rem\] {
-    border-radius: 4rem;
   }
 
   .lg\:rounded-\[3rem\] {

@@ -68,7 +68,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const primary = websiteRes.website.theme.primaryColor
 
-  const [featuresFeedRes, featuresFeedErr] = await safeGet<any>(request, `https://cdn.revas.app/contents/v0/directories/websites-features/feed.json?public_key=01exy3y9j9pdvyzhchkpj9vc5w`)
+  const [featuresFeedRes, featuresFeedErr] = await safeGet<any>(request, `https://cdn.revas.app/contents/v0/directories/websites-features-${params.lang?.toLowerCase().split('-')[0]}/feed.json?public_key=01exy3y9j9pdvyzhchkpj9vc5w`)
   if (featuresFeedErr !== null) {
     throw new Response(`API Feed: ${featuresFeedErr.message}, ${featuresFeedErr.code}`, {
       status: 404,

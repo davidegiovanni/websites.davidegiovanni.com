@@ -56,6 +56,7 @@ type LoaderData = {
   secondary: string;
   host: string;
   features: FeedItem[];
+  comparisons: FeedItem[];
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -88,7 +89,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const mainSection: WebSectionModel = page.sections[0]
   const sections: WebSectionModel[] = page.sections.slice(1)
 
-  const [featuresFeedRes, featuresFeedErr] = await safeGet<any>(request, `https://cdn.revas.app/contents/v0/directories/websites-features/feed.json?public_key=01exy3y9j9pdvyzhchkpj9vc5w`)
+  const [featuresFeedRes, featuresFeedErr] = await safeGet<any>(request, `https://cdn.revas.app/contents/v0/directories/websites-features-${params.lang?.toLowerCase().split('-')[0]}/feed.json?public_key=01exy3y9j9pdvyzhchkpj9vc5w`)
   if (featuresFeedErr !== null) {
     throw new Response(`API Feed: ${featuresFeedErr.message}, ${featuresFeedErr.code}`, {
       status: 404,
@@ -99,6 +100,17 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const features: FeedItem[] = featuresFeed.items
 
+  const [comparisonsFeedRes, comparisonsFeedErr] = await safeGet<any>(request, `https://cdn.revas.app/contents/v0/directories/websites-comparisons-${params.lang?.toLowerCase().split('-')[0]}/feed.json?public_key=01exy3y9j9pdvyzhchkpj9vc5w`)
+  if (comparisonsFeedErr !== null) {
+    throw new Response(`API Feed: ${comparisonsFeedErr.message}, ${comparisonsFeedErr.code}`, {
+      status: 404,
+    });
+  }
+
+  const comparisonsFeed: Feed = comparisonsFeedRes
+
+  const comparisons: FeedItem[] = comparisonsFeed.items
+
   const loaderData: LoaderData = {
     i18n,
     page,
@@ -108,7 +120,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     secondary,
     logo,
     host,
-    features
+    features,
+    comparisons
   }
 
   return json(loaderData)
@@ -123,6 +136,7 @@ export default function Index() {
   const sections = loaderData.sections
   const logo = loaderData.logo
   const features = loaderData.features
+  const comparisons = loaderData.comparisons
 
   function buildSrcset(url: any, format: string): any {
     const u = url.replace('cdn.revas.app', 'static.eu1.revas-cdn.com')
@@ -158,6 +172,22 @@ export default function Index() {
 
   const isOutletPageOpen = location.pathname.includes('features')
 
+  const title = (number: number) => {
+    return sections[number].title
+  }
+
+  const description = (number: number) => {
+    return sections[number].description
+  }
+
+  const image = (number: number) => {
+    return sections[number].image
+  }
+
+  const link = (number: number) => {
+    return sections[number].primaryLink
+  }
+
   return (
     <div className="overflow-y-auto bg-zinc-400 h-full w-full uppercase">
       {
@@ -167,7 +197,7 @@ export default function Index() {
           </div>
         )
       }
-      <div className="h-screen w-full relative flex flex-col border-b border-black">
+      <div className="h-[50vh] lg:h-screen w-full relative flex flex-col border-b border-black">
         <div className="flex-1 h-8 w-full p-[2vmin]">
           <div className="h-full w-full relative rounded-3xl overflow-hidden isolate">
             <div className="absolute inset-0 h-full w-full z-20">
@@ -421,6 +451,22 @@ export default function Index() {
             </svg>
 
           </Link>
+        </div>
+      </div>
+      <div className="p-[2vmin] selection:bg-[#4af626]">
+        <div className="h-full lg:aspect-[2/1] rounded-3xl bg-black text-[#4af626] lowercase font-mono px-[2vmin] py-[1vmin] overflow-x-hidden flex items-center justify-center">
+          <div className="max-w-2xl">
+            <p className="mb-[6vmin]">
+              {title(0)} <span className="-translate-x-1 translate-y-0.5 inline-block w-2 h-4 pulsate bg-[#4af626]"></span>
+            </p>
+            {
+              comparisons.map(c => (
+                <p>
+                  {">"} <span className="uppercase underline decoration-double">{c.title}</span> {c.summary}
+                </p>
+              ))
+            }
+          </div>
         </div>
       </div>
     </div>

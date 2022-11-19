@@ -1546,6 +1546,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding: 1vmin;
 }
 
+.p-\[4vmin\] {
+  padding: 4vmin;
+}
+
 .px-\[4vmin\] {
   padding-left: 4vmin;
   padding-right: 4vmin;
@@ -1887,6 +1891,16 @@ img {
 
   .lg\:border-l {
     border-left-width: 1px;
+  }
+
+  .lg\:px-\[2vmin\] {
+    padding-left: 2vmin;
+    padding-right: 2vmin;
+  }
+
+  .lg\:py-\[1vmin\] {
+    padding-top: 1vmin;
+    padding-bottom: 1vmin;
   }
 
   .lg\:text-base {

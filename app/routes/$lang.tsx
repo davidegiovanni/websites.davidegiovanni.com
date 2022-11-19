@@ -454,7 +454,7 @@ export default function Index() {
         </div>
       </div>
       <div className="p-[2vmin] selection:bg-[#4af626]">
-        <div className="h-full lg:aspect-[2/1] rounded-3xl bg-black text-[#4af626] lowercase font-mono px-[2vmin] py-[1vmin] overflow-x-hidden flex items-center justify-center">
+        <div className="h-full lg:aspect-[2/1] rounded-3xl bg-black text-[#4af626] lowercase font-mono p-[4vmin] lg:px-[2vmin] lg:py-[1vmin] overflow-x-hidden flex items-center justify-center">
           <div className="max-w-2xl">
             <p className="mb-[6vmin]">
               {title(0)} <span className="-translate-x-1 translate-y-0.5 inline-block w-2 h-4 pulsate bg-[#4af626]"></span>

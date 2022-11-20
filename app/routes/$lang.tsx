@@ -8,6 +8,7 @@ import link from '~/utils/links'
 import { fluidType } from '~/utils/helpers'
 import { Attachment } from "~/components/Attachment";
 import queryString from 'query-string'
+import { useEffect, useState } from "react";
 
 function getPageSlug(url: string) {
   return url.replace('https://websites.davidegiovanni.com/', '')
@@ -191,6 +192,20 @@ export default function Index() {
   const link = (number: number) => {
     return sections[number].primaryLink
   }
+
+  const [currentTime, setCurrentTime] = useState('-------')
+
+  const getTimeDate = () => {
+    var date = new Date();
+    var current_date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
+    var current_time = `${date.getHours() < 10 ? '0': ''}${date.getHours()}`+":"+`${date.getMinutes() < 10 ? '0': ''}${date.getMinutes()}`+":"+ `${date.getSeconds()}${date.getSeconds() < 10 ? '0': ''}`;
+    var date_time = current_date+" - "+current_time;
+    setCurrentTime(date_time)
+  }
+
+  useEffect(
+    () => {setTimeout(getTimeDate, 1000)}
+  )
 
   return (
     <div className="overflow-y-auto bg-zinc-400 h-full w-full uppercase">
@@ -472,7 +487,7 @@ export default function Index() {
           <div>
             {
               comparisons.map((c, index) => (
-                <div style={{ zIndex: index * 10 }} className="sticky top-0 border-t border-black pb-[6vmin] mb-[2vmin] grid grid-cols-12 gap-[2vmin] bg-zinc-400">
+                <div style={{ zIndex: index * 10 }} className="sticky top-0 border-t border-black pb-[6vmin] mb-[2vmin] grid grid-cols-12 gap-[2vmin] bg-zinc-400 px-[2vmin]">
                   <div className="relative w-fit h-fit px-4 py-2 col-span-12 md:col-span-3">
                     <p className="relative z-20">
                       {c.title}
@@ -532,6 +547,32 @@ export default function Index() {
               <div className="bg-[#ccff00] blur-[6px] rounded-[50%] absolute inset-0 w-full h-full" />
             </div>
           </div>
+      </div>
+      <div>
+        <div className="grid grid-cols-12 gap-[4vmin] mt-[32vmin]">
+          <div className="col-span-10 lg:col-span-4 col-start-2 lg:col-start-7">
+            {description(5)}
+            <div className="max-w-sm w-fit h-fit relative px-8 py-4 mt-[8vmin] rounded-[50%]">
+              <Link to={`/${getPageSlug(link(5).url)}`} className="relative z-10">
+                { link(5).title}
+              </Link>
+              <div className="bg-pink-500 blur-[6px] rounded-[50%] absolute inset-0 w-full h-full border border-black" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="grid grid-cols-12 gap-[4vmin] text-xs uppercase border-t border-black p-[2vmin] mt-[48vmin]">
+        <div className="col-span-12 lg:col-span-4">
+          {currentTime} | Copyright © <a href="https://davidegiovanni.com" target={'_blank'} rel="noopener">Davide Giovanni Steccanella</a>
+        </div>
+        <div className="col-span-12 lg:col-span-4 lg:col-end-13 lg:text-right">
+          <p>
+            This website is green, fast and privacy friendly
+          </p>
+          <p>
+            Built by me with RevasOS and code
+          </p>
+        </div>
       </div>
     </div>
   );

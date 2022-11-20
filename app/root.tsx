@@ -115,16 +115,6 @@ export default function App() {
 
   const favicon = loaderData.favicon || ""
 
-  const [currentTime, setCurrentTime] = useState('-------')
-
-  const getTimeDate = () => {
-    var date = new Date();
-    var current_date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
-    var current_time = `${date.getHours() < 10 ? '0': ''}${date.getHours()}`+":"+`${date.getMinutes() < 10 ? '0': ''}${date.getMinutes()}`+":"+ `${date.getSeconds()}${date.getSeconds() < 10 ? '0': ''}`;
-    var date_time = current_date+" - "+current_time;
-    setCurrentTime(date_time)
-  }
-
   function getLanguageName (lang: string) {
     switch (lang) {
       case 'it-IT':
@@ -149,7 +139,7 @@ export default function App() {
   }
 
   return (
-    <html lang={loaderData.incomingLocale}>
+    <html lang={loaderData.incomingLocale} className="bg-zinc-400">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -158,8 +148,8 @@ export default function App() {
         {!!favicon && <link rel="icon" type="image/x-icon" href={favicon}></link>}
         <Links />
       </head>
-      <body>
-        <div style={style} className="fixed inset-0 overflow-hidden w-full h-full font-default">
+      <body className="bg-zinc-400">
+        <div style={style} className="fixed inset-0 overflow-hidden">
           <div className="w-full h-full overflow-hidden">
             <Outlet />
           </div>

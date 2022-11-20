@@ -9,6 +9,10 @@ import { fluidType } from '~/utils/helpers'
 import { Attachment } from "~/components/Attachment";
 import queryString from 'query-string'
 
+function getPageSlug(url: string) {
+  return url.replace('https://websites.davidegiovanni.com/', '')
+}
+
 export const links: LinksFunction = () => {
   return link(
     {
@@ -197,6 +201,11 @@ export default function Index() {
           </div>
         )
       }
+      <div className="hidden grid-cols-12 gap-[2vmin] fixed inset-0 z-50 select-none pointer-events-none">
+        { [0,1,2,3,4,5,6,7,8,9,10,11].map(n => (
+          <div className="h-full bg-white opacity-25"></div>
+        ))}
+      </div>
       <div className="h-[50vh] lg:h-screen w-full relative flex flex-col border-b border-black">
         <div className="flex-1 h-8 w-full p-[2vmin]">
           <div className="h-full w-full relative rounded-3xl overflow-hidden isolate">
@@ -214,7 +223,7 @@ export default function Index() {
           </div>
         </div>
         <div className="p-[2vmin] border-t border-black">
-          <h1 className="font-semibold uppercase max-w-lg" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
+          <h1 className=" uppercase max-w-lg" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
             {mainSection.title}
           </h1>
         </div>
@@ -229,7 +238,7 @@ export default function Index() {
               description: ""
             }}></Attachment>
           </div>
-          <h2 className="absolute bottom-0 inset-x-0 font-medium text-center text-black w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
+          <h2 className="absolute bottom-0 inset-x-0  text-center text-black w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
             {features[0].title}
           </h2>
           <Link to={`/${params.lang}/features/${getSlug(features[0].id)}`} style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }} className="absolute top-0 lg:top-auto lg:bottom-0 right-0 mx-[2vmin] mt-[2vmin] lg:mt-0 lg:mb-[2.3vmin] z-30">
@@ -251,7 +260,7 @@ export default function Index() {
               description: ""
             }}></Attachment>
           </div>
-          <h2 className="font-medium text-center text-black w-11/12 mx-auto mt-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
+          <h2 className=" text-center text-black w-11/12 mx-auto mt-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
             {features[1].title}
           </h2>
           <Link to={`/${params.lang}/features/${getSlug(features[1].id)}`} style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }} className="absolute top-0 lg:top-auto lg:bottom-0 right-0 mx-[2vmin] mt-[2vmin] lg:mt-0 lg:mb-[2.3vmin] z-30">
@@ -275,7 +284,7 @@ export default function Index() {
               description: ""
             }}></Attachment>
           </div>
-          <h2 className="lg:absolute bottom-0 inset-x-0 font-medium text-center text-black w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
+          <h2 className="lg:absolute bottom-0 inset-x-0  text-center text-black w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
             {features[2].title}
           </h2>
           <Link to={`/${params.lang}/features/${getSlug(features[2].id)}`} style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }} className="absolute top-0 lg:top-auto lg:bottom-0 right-0 mx-[2vmin] mt-[2vmin] lg:mt-0 lg:mb-[2.3vmin] z-30">
@@ -297,7 +306,7 @@ export default function Index() {
               description: ""
             }}></Attachment>
           </div>
-          <h2 className="absolute bottom-0 inset-x-0 font-medium text-center text-black w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
+          <h2 className="absolute bottom-0 inset-x-0  text-center text-black w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
             {features[3].title}
           </h2>
           <Link to={`/${params.lang}/features/${getSlug(features[3].id)}`} style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }} className="absolute top-0 lg:top-auto lg:bottom-0 right-0 mx-[2vmin] mt-[2vmin] lg:mt-0 lg:mb-[2.3vmin] z-30">
@@ -339,7 +348,7 @@ export default function Index() {
               description: ""
             }}></Attachment>
           </div>
-          <h2 className="absolute bottom-0 inset-x-0 font-medium text-center text-black w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
+          <h2 className="absolute bottom-0 inset-x-0  text-center text-black w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
             {features[6].title}
           </h2>
           <Link to={`/${params.lang}/features/${getSlug(features[6].id)}`} style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }} className="absolute top-0 lg:top-auto lg:bottom-0 right-0 mx-[2vmin] mt-[2vmin] lg:mt-0 lg:mb-[2.3vmin] z-30">
@@ -363,7 +372,7 @@ export default function Index() {
               description: ""
             }}></Attachment>
           </div>
-          <h2 className="absolute z-30 bottom-0 inset-x-0 font-medium text-center text-black w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
+          <h2 className="absolute z-30 bottom-0 inset-x-0  text-center text-black w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
             {features[7].title}
           </h2>
           <Link to={`/${params.lang}/features/${getSlug(features[7].id)}`} style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }} className="absolute top-0 lg:top-auto lg:bottom-0 right-0 mx-[2vmin] mt-[2vmin] lg:mt-0 lg:mb-[2.3vmin] z-30">
@@ -385,7 +394,7 @@ export default function Index() {
               description: ""
             }}></Attachment>
           </div>
-          <h2 className="absolute bottom-0 inset-x-0 font-medium text-center text-white w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
+          <h2 className="absolute bottom-0 inset-x-0  text-center text-white w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
             {features[8].title}
           </h2>
           <Link to={`/${params.lang}/features/${getSlug(features[8].id)}`} style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }} className="absolute top-0 lg:top-auto lg:bottom-0 right-0 mx-[2vmin] mt-[2vmin] lg:mt-0 lg:mb-[2.3vmin] z-30 text-white">
@@ -407,7 +416,7 @@ export default function Index() {
               description: ""
             }}></Attachment>
           </div>
-          <h2 className="absolute z-30 bottom-0 inset-x-0 font-medium text-center text-white w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
+          <h2 className="absolute z-30 bottom-0 inset-x-0  text-center text-white w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
             {features[9].title}
           </h2>
           <Link to={`/${params.lang}/features/${getSlug(features[9].id)}`} style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }} className="absolute top-0 lg:top-auto lg:bottom-0 right-0 mx-[2vmin] mt-[2vmin] lg:mt-0 lg:mb-[2.3vmin] z-30 text-white">
@@ -439,7 +448,7 @@ export default function Index() {
               description: ""
             }}></Attachment>
           </div>
-          <h2 className="absolute bottom-0 inset-x-0 font-medium text-center text-black w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
+          <h2 className="absolute bottom-0 inset-x-0  text-center text-black w-11/12 mx-auto px-[4vmin] my-[2vmin]" style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }}>
             {features[11].title}
           </h2>
           <Link to={`/${params.lang}/features/${getSlug(features[11].id)}`} style={{ fontSize: fluidType(16, 32, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 24, 300, 2400, 1.5).lineHeight }} className="absolute top-0 lg:top-auto lg:bottom-0 right-0 mx-[2vmin] mt-[2vmin] lg:mt-0 lg:mb-[2.3vmin] z-30">
@@ -453,21 +462,76 @@ export default function Index() {
           </Link>
         </div>
       </div>
-      <div className="p-[2vmin] selection:bg-[#4af626]">
-        <div className="h-full lg:aspect-[2/1] rounded-3xl bg-black text-[#4af626] lowercase font-mono p-[4vmin] lg:px-[2vmin] lg:py-[1vmin] overflow-x-hidden flex items-center justify-center">
-          <div className="max-w-2xl">
-            <p className="mb-[6vmin]">
-              {title(0)} <span className="-translate-x-1 translate-y-0.5 inline-block w-2 h-4 pulsate bg-[#4af626]"></span>
-            </p>
+      <div className="border-b border-black">
+        <div className="sticky top-0 w-full aspect-[2/1] p-[2vmin]">
+          <p className="uppercase max-w-2xl" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
+          {title(0)}
+          </p>
+        </div>
+        <div>
+          <div>
             {
-              comparisons.map(c => (
-                <p>
-                  {">"} <span className="uppercase underline decoration-double">{c.title}</span> {c.summary}
-                </p>
+              comparisons.map((c, index) => (
+                <div style={{ zIndex: index * 10 }} className="sticky top-0 border-t border-black pb-[6vmin] mb-[2vmin] grid grid-cols-12 gap-[2vmin] bg-zinc-400">
+                  <div className="relative w-fit h-fit px-4 py-2 col-span-12 md:col-span-3">
+                    <p className="relative z-20">
+                      {c.title}
+                    </p>
+                    <div className="bg-[#4af626] blur-[8px] rounded-[50%] absolute inset-0 w-full h-full" />
+                  </div>
+                  <p className="w-full max-w-2xl col-span-12 md:col-span-6 md:col-start-7">
+                    {c.summary}
+                  </p>
+                </div>
               ))
             }
           </div>
         </div>
+      </div>
+      <div>
+          <div className="p-[2vmin] aspect-[2/1]">
+          <p className="uppercase max-w-2xl" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
+          {title(1)}
+          </p>
+          </div>
+          <div className="sticky top-0 z-10 h-screen w-screen flex items-center justify-center p-[4vmin]">
+            <div className="max-w-xs rotate-3">
+            <Attachment attachment={{
+              id: "",
+              mediaType: "image/",
+              url: image(2),
+              description: ""
+            }}></Attachment>
+            </div>
+          </div>
+          <div className="sticky top-0 z-20 h-screen w-screen flex items-center justify-center p-[4vmin]">
+            <div className="max-w-xs -rotate-6">
+            <Attachment attachment={{
+              id: "",
+              mediaType: "image/",
+              url: image(3),
+              description: ""
+            }}></Attachment>
+            </div>
+          </div>
+          <div className="sticky top-0 z-30 h-screen w-screen flex items-center justify-center p-[4vmin]">
+            <div className="max-w-xs">
+            <Attachment attachment={{
+              id: "",
+              mediaType: "image/",
+              url: image(4),
+              description: ""
+            }}></Attachment>
+            </div>
+          </div>
+          <div className="sticky top-0 z-40 h-screen w-screen flex items-center justify-center p-[4vmin]">
+            <div className="max-w-sm w-fit h-fit relative px-8 py-4">
+              <Link to={`/${getPageSlug(link(1).url)}`} className="relative z-10">
+                { link(1).title}
+              </Link>
+              <div className="bg-[#ccff00] blur-[6px] rounded-[50%] absolute inset-0 w-full h-full" />
+            </div>
+          </div>
       </div>
     </div>
   );

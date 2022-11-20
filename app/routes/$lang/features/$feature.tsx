@@ -105,23 +105,24 @@ export default function Index() {
   const feature = loaderData.feature
 
   return (
-    <div className="overflow-hidden bg-black bg-opacity-40 flex items-stretch justify-end h-full w-full">
-      <div className="bg-white lg:border-l border-black w-full md:w-2/3 lg:w-1/2 max-w-2xl h-full overflow-hidden flex items-stretch justify-end">
-        <div className="border-r border-black p-[2vmin] w-12 flex-none relative">
+    <div className="overflow-hidden bg-black bg-opacity-40 flex items-stretch justify-end h-full w-full p-[2vmin]">
+      <div className="relative w-full md:w-2/3 lg:w-1/2 max-w-2xl h-full flex items-stretch justify-end">
+        <div className="p-[2vmin] w-12 flex-none relative z-20">
           <h1 className="uppercase text-2xl absolute top-0 right-0 -rotate-90 origin-bottom-right -translate-y-full -translate-x-2">
             {feature.title} 
-            <Link to={`/${params.lang}`} className="mx-[2vmin] underline">
+            <Link to={`/${params.lang}`} className="mx-[2vmin] px-4 py-2 rounded-[50%] border border-black">
               HOME
             </Link>
           </h1>
         </div>
-        <div className="p-[2vmin] h-full overflow-y-auto">
+        <div className="pr-[2vmin] py-[2vmin] pl-[1vmin] h-full overflow-y-auto relative z-20">
         { feature.content_html !== "" && feature.content_html !== undefined &&
-              <article className="block prose prose-2xl max-w-none text-black prose-a:text-[blue] prose-a:underline-offset-4 prose-blockquote:bg-gray-100 prose-blockquote:p-8 prose-blockquote:border-0 prose-blockquote:prose-p:first-of-type:before:opacity-0 prose-a:visited:text-[purple] prose-li:marker:text-[black]">
+              <article className="block prose prose-2xl max-w-none text-black prose-a:text-[blue] prose-a:underline-offset-4 prose-blockquote:bg-gray-100 prose-blockquote:p-8 prose-blockquote:border-0 prose-blockquote:prose-p:first-of-type:before:opacity-0 prose-a:visited:text-[purple] prose-li:marker:text-[black] prose-p:leading-8">
               {parse(feature.content_html)}
             </article>
             }
         </div>
+        <div className="bg-white blur-sm absolute inset-0 rounded-3xl"></div>
       </div>
     </div>
   );

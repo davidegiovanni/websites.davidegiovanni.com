@@ -876,6 +876,216 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 0;
 }
 
+.prose-sm {
+  font-size: 0.875rem;
+  line-height: 1.7142857;
+}
+
+.prose-sm :where(p):not(:where([class~="not-prose"] *)) {
+  margin-top: 1.1428571em;
+  margin-bottom: 1.1428571em;
+}
+
+.prose-sm :where([class~="lead"]):not(:where([class~="not-prose"] *)) {
+  font-size: 1.2857143em;
+  line-height: 1.5555556;
+  margin-top: 0.8888889em;
+  margin-bottom: 0.8888889em;
+}
+
+.prose-sm :where(blockquote):not(:where([class~="not-prose"] *)) {
+  margin-top: 1.3333333em;
+  margin-bottom: 1.3333333em;
+  padding-left: 1.1111111em;
+}
+
+.prose-sm :where(h1):not(:where([class~="not-prose"] *)) {
+  font-size: 2.1428571em;
+  margin-top: 0;
+  margin-bottom: 0.8em;
+  line-height: 1.2;
+}
+
+.prose-sm :where(h2):not(:where([class~="not-prose"] *)) {
+  font-size: 1.4285714em;
+  margin-top: 1.6em;
+  margin-bottom: 0.8em;
+  line-height: 1.4;
+}
+
+.prose-sm :where(h3):not(:where([class~="not-prose"] *)) {
+  font-size: 1.2857143em;
+  margin-top: 1.5555556em;
+  margin-bottom: 0.4444444em;
+  line-height: 1.5555556;
+}
+
+.prose-sm :where(h4):not(:where([class~="not-prose"] *)) {
+  margin-top: 1.4285714em;
+  margin-bottom: 0.5714286em;
+  line-height: 1.4285714;
+}
+
+.prose-sm :where(img):not(:where([class~="not-prose"] *)) {
+  margin-top: 1.7142857em;
+  margin-bottom: 1.7142857em;
+}
+
+.prose-sm :where(video):not(:where([class~="not-prose"] *)) {
+  margin-top: 1.7142857em;
+  margin-bottom: 1.7142857em;
+}
+
+.prose-sm :where(figure):not(:where([class~="not-prose"] *)) {
+  margin-top: 1.7142857em;
+  margin-bottom: 1.7142857em;
+}
+
+.prose-sm :where(figure > *):not(:where([class~="not-prose"] *)) {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.prose-sm :where(figcaption):not(:where([class~="not-prose"] *)) {
+  font-size: 0.8571429em;
+  line-height: 1.3333333;
+  margin-top: 0.6666667em;
+}
+
+.prose-sm :where(code):not(:where([class~="not-prose"] *)) {
+  font-size: 0.8571429em;
+}
+
+.prose-sm :where(h2 code):not(:where([class~="not-prose"] *)) {
+  font-size: 0.9em;
+}
+
+.prose-sm :where(h3 code):not(:where([class~="not-prose"] *)) {
+  font-size: 0.8888889em;
+}
+
+.prose-sm :where(pre):not(:where([class~="not-prose"] *)) {
+  font-size: 0.8571429em;
+  line-height: 1.6666667;
+  margin-top: 1.6666667em;
+  margin-bottom: 1.6666667em;
+  border-radius: 0.25rem;
+  padding-top: 0.6666667em;
+  padding-right: 1em;
+  padding-bottom: 0.6666667em;
+  padding-left: 1em;
+}
+
+.prose-sm :where(ol):not(:where([class~="not-prose"] *)) {
+  padding-left: 1.5714286em;
+}
+
+.prose-sm :where(ul):not(:where([class~="not-prose"] *)) {
+  padding-left: 1.5714286em;
+}
+
+.prose-sm :where(li):not(:where([class~="not-prose"] *)) {
+  margin-top: 0.2857143em;
+  margin-bottom: 0.2857143em;
+}
+
+.prose-sm :where(ol > li):not(:where([class~="not-prose"] *)) {
+  padding-left: 0.4285714em;
+}
+
+.prose-sm :where(ul > li):not(:where([class~="not-prose"] *)) {
+  padding-left: 0.4285714em;
+}
+
+.prose-sm > :where(ul > li p):not(:where([class~="not-prose"] *)) {
+  margin-top: 0.5714286em;
+  margin-bottom: 0.5714286em;
+}
+
+.prose-sm > :where(ul > li > *:first-child):not(:where([class~="not-prose"] *)) {
+  margin-top: 1.1428571em;
+}
+
+.prose-sm > :where(ul > li > *:last-child):not(:where([class~="not-prose"] *)) {
+  margin-bottom: 1.1428571em;
+}
+
+.prose-sm > :where(ol > li > *:first-child):not(:where([class~="not-prose"] *)) {
+  margin-top: 1.1428571em;
+}
+
+.prose-sm > :where(ol > li > *:last-child):not(:where([class~="not-prose"] *)) {
+  margin-bottom: 1.1428571em;
+}
+
+.prose-sm :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~="not-prose"] *)) {
+  margin-top: 0.5714286em;
+  margin-bottom: 0.5714286em;
+}
+
+.prose-sm :where(hr):not(:where([class~="not-prose"] *)) {
+  margin-top: 2.8571429em;
+  margin-bottom: 2.8571429em;
+}
+
+.prose-sm :where(hr + *):not(:where([class~="not-prose"] *)) {
+  margin-top: 0;
+}
+
+.prose-sm :where(h2 + *):not(:where([class~="not-prose"] *)) {
+  margin-top: 0;
+}
+
+.prose-sm :where(h3 + *):not(:where([class~="not-prose"] *)) {
+  margin-top: 0;
+}
+
+.prose-sm :where(h4 + *):not(:where([class~="not-prose"] *)) {
+  margin-top: 0;
+}
+
+.prose-sm :where(table):not(:where([class~="not-prose"] *)) {
+  font-size: 0.8571429em;
+  line-height: 1.5;
+}
+
+.prose-sm :where(thead th):not(:where([class~="not-prose"] *)) {
+  padding-right: 1em;
+  padding-bottom: 0.6666667em;
+  padding-left: 1em;
+}
+
+.prose-sm :where(thead th:first-child):not(:where([class~="not-prose"] *)) {
+  padding-left: 0;
+}
+
+.prose-sm :where(thead th:last-child):not(:where([class~="not-prose"] *)) {
+  padding-right: 0;
+}
+
+.prose-sm :where(tbody td):not(:where([class~="not-prose"] *)) {
+  padding-top: 0.6666667em;
+  padding-right: 1em;
+  padding-bottom: 0.6666667em;
+  padding-left: 1em;
+}
+
+.prose-sm :where(tbody td:first-child):not(:where([class~="not-prose"] *)) {
+  padding-left: 0;
+}
+
+.prose-sm :where(tbody td:last-child):not(:where([class~="not-prose"] *)) {
+  padding-right: 0;
+}
+
+.prose-sm > :where(:first-child):not(:where([class~="not-prose"] *)) {
+  margin-top: 0;
+}
+
+.prose-sm > :where(:last-child):not(:where([class~="not-prose"] *)) {
+  margin-bottom: 0;
+}
+
 .prose-2xl {
   font-size: 1.5rem;
   line-height: 1.6666667;
@@ -1147,6 +1357,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   right: 0px;
 }
 
+.left-0 {
+  left: 0px;
+}
+
 .isolate {
   isolation: isolate;
 }
@@ -1179,28 +1393,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   grid-column: span 12 / span 12;
 }
 
-.col-span-4 {
-  grid-column: span 4 / span 4;
-}
-
-.col-span-11 {
-  grid-column: span 11 / span 11;
-}
-
 .col-span-10 {
   grid-column: span 10 / span 10;
 }
 
-.col-start-6 {
-  grid-column-start: 6;
-}
-
-.col-start-7 {
-  grid-column-start: 7;
-}
-
-.col-start-1 {
-  grid-column-start: 1;
+.col-span-4 {
+  grid-column: span 4 / span 4;
 }
 
 .col-start-2 {
@@ -1213,6 +1411,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .row-span-2 {
   grid-row: span 2 / span 2;
+}
+
+.m-\[2vmin\] {
+  margin: 2vmin;
 }
 
 .my-4 {
@@ -1235,6 +1437,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-right: 2vmin;
 }
 
+.mx-\[1vmin\] {
+  margin-left: 1vmin;
+  margin-right: 1vmin;
+}
+
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -1247,40 +1454,32 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 2vmin;
 }
 
-.mt-4 {
-  margin-top: 1rem;
-}
-
-.mt-\[\] {
-  margin-top: ;
+.mt-\[32vmin\] {
+  margin-top: 32vmin;
 }
 
 .mt-\[8vmin\] {
   margin-top: 8vmin;
 }
 
-.mt-\[16vmin\] {
-  margin-top: 16vmin;
-}
-
-.mt-\[12vmin\] {
-  margin-top: 12vmin;
-}
-
-.mt-\[24vmin\] {
-  margin-top: 24vmin;
-}
-
-.mt-\[32vmin\] {
-  margin-top: 32vmin;
-}
-
-.mt-\[vmin\] {
-  margin-top: vmin;
-}
-
 .mt-\[48vmin\] {
   margin-top: 48vmin;
+}
+
+.mb-\[8vmin\] {
+  margin-bottom: 8vmin;
+}
+
+.mt-\[50vh\] {
+  margin-top: 50vh;
+}
+
+.mt-\[\] {
+  margin-top: ;
+}
+
+.mb-\[1vmin\] {
+  margin-bottom: 1vmin;
 }
 
 .block {
@@ -1313,6 +1512,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .aspect-\[2\/1\] {
   aspect-ratio: 2 / 1;
+}
+
+.aspect-\[\] {
+  aspect-ratio: ;
+}
+
+.aspect-\[4\/1\] {
+  aspect-ratio: 4 / 1;
 }
 
 .h-full {
@@ -1363,6 +1570,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 100vw;
 }
 
+.w-1\/2 {
+  width: 50%;
+}
+
 .w-12 {
   width: 3rem;
 }
@@ -1381,6 +1592,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .max-w-sm {
   max-width: 24rem;
+}
+
+.max-w-xl {
+  max-width: 36rem;
 }
 
 .max-w-none {
@@ -1447,8 +1662,20 @@ Ensure the default browser behavior of the `hidden` attribute.
           user-select: none;
 }
 
+.auto-rows-fr {
+  grid-auto-rows: minmax(0, 1fr);
+}
+
 .grid-cols-12 {
   grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 .grid-rows-2 {
@@ -1491,20 +1718,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   gap: 4vmin;
 }
 
-.gap-\[\] {
-  gap: ;
-}
-
 .overflow-hidden {
   overflow: hidden;
 }
 
 .overflow-y-auto {
   overflow-y: auto;
-}
-
-.overflow-y-hidden {
-  overflow-y: hidden;
 }
 
 .rounded-3xl {
@@ -1536,14 +1755,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 
-.bg-\[\#0827F5\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(8 39 245 / var(--tw-bg-opacity));
-}
-
 .bg-zinc-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(161 161 170 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#0827F5\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(8 39 245 / var(--tw-bg-opacity));
 }
 
 .bg-white {
@@ -1566,18 +1785,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(204 255 0 / var(--tw-bg-opacity));
 }
 
-.bg-black {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
-}
-
-.bg-transparent {
-  background-color: transparent;
-}
-
 .bg-pink-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(236 72 153 / var(--tw-bg-opacity));
+}
+
+.bg-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-40 {
@@ -1601,13 +1816,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding: 4vmin;
 }
 
-.p-\[\] {
-  padding: ;
-}
-
 .px-\[4vmin\] {
   padding-left: 4vmin;
   padding-right: 4vmin;
+}
+
+.px-\[2vmin\] {
+  padding-left: 2vmin;
+  padding-right: 2vmin;
 }
 
 .px-4 {
@@ -1635,16 +1851,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-bottom: 2vmin;
 }
 
-.px-\[\] {
-  padding-left: ;
-  padding-right: ;
-}
-
-.px-\[2vmin\] {
-  padding-left: 2vmin;
-  padding-right: 2vmin;
-}
-
 .pb-\[6vmin\] {
   padding-bottom: 6vmin;
 }
@@ -1665,17 +1871,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   text-align: right;
 }
 
-.text-justify {
-  text-align: justify;
-}
-
-.font-default {
-  font-family: var(--customfont);
-}
-
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem;
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .text-sm {
@@ -1683,9 +1881,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   line-height: 1.25rem;
 }
 
-.text-xs {
-  font-size: 0.75rem;
-  line-height: 1rem;
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .uppercase {
@@ -1728,6 +1926,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.transition {
+  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 /* commento */
@@ -1838,6 +2044,10 @@ img {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.prose-p\:m-0 :is(:where(p):not(:where([class~="not-prose"] *))) {
+  margin: 0px;
+}
+
 .prose-p\:leading-8 :is(:where(p):not(:where([class~="not-prose"] *))) {
   line-height: 2rem;
 }
@@ -1881,6 +2091,14 @@ img {
 .prose-li\:marker\:text-\[black\] :is(:where(li):not(:where([class~="not-prose"] *)))::marker {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+.prose-img\:m-0 :is(:where(img):not(:where([class~="not-prose"] *))) {
+  margin: 0px;
+}
+
+.prose-hr\:opacity-0 :is(:where(hr):not(:where([class~="not-prose"] *))) {
+  opacity: 0;
 }
 
 @media (min-width: 768px) {
@@ -1935,11 +2153,20 @@ img {
     --tw-scale-y: 1;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
+
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (min-width: 1024px) {
   .lg\:absolute {
     position: absolute;
+  }
+
+  .lg\:sticky {
+    position: -webkit-sticky;
+    position: sticky;
   }
 
   .lg\:top-auto {
@@ -1954,6 +2181,10 @@ img {
     grid-column: span 4 / span 4;
   }
 
+  .lg\:col-span-6 {
+    grid-column: span 6 / span 6;
+  }
+
   .lg\:col-span-3 {
     grid-column: span 3 / span 3;
   }
@@ -1962,12 +2193,8 @@ img {
     grid-column-start: 7;
   }
 
-  .lg\:col-end-7 {
-    grid-column-end: 7;
-  }
-
-  .lg\:col-end-12 {
-    grid-column-end: 12;
+  .lg\:col-start-9 {
+    grid-column-start: 9;
   }
 
   .lg\:col-end-13 {
@@ -1990,10 +2217,6 @@ img {
     aspect-ratio: auto;
   }
 
-  .lg\:aspect-video {
-    aspect-ratio: 16 / 9;
-  }
-
   .lg\:h-screen {
     height: 100vh;
   }
@@ -2002,12 +2225,12 @@ img {
     width: 50%;
   }
 
-  .lg\:border-r {
-    border-right-width: 1px;
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .lg\:text-center {
-    text-align: center;
+  .lg\:border-r {
+    border-right-width: 1px;
   }
 
   .lg\:text-right {

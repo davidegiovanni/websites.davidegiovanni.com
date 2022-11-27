@@ -1397,12 +1397,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   grid-column: span 10 / span 10;
 }
 
-.col-span-4 {
-  grid-column: span 4 / span 4;
+.col-span-9 {
+  grid-column: span 9 / span 9;
 }
 
 .col-start-2 {
   grid-column-start: 2;
+}
+
+.col-start-3 {
+  grid-column-start: 3;
 }
 
 .row-span-1 {
@@ -1466,20 +1470,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 48vmin;
 }
 
+.mb-\[50vh\] {
+  margin-bottom: 50vh;
+}
+
 .mb-\[8vmin\] {
   margin-bottom: 8vmin;
 }
 
 .mt-\[50vh\] {
   margin-top: 50vh;
-}
-
-.mt-\[\] {
-  margin-top: ;
-}
-
-.mb-\[1vmin\] {
-  margin-bottom: 1vmin;
 }
 
 .block {
@@ -1512,10 +1512,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .aspect-\[2\/1\] {
   aspect-ratio: 2 / 1;
-}
-
-.aspect-\[\] {
-  aspect-ratio: ;
 }
 
 .aspect-\[4\/1\] {
@@ -1668,10 +1664,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .grid-cols-12 {
   grid-template-columns: repeat(12, minmax(0, 1fr));
-}
-
-.grid-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .grid-cols-1 {
@@ -2209,6 +2201,10 @@ img {
     margin-bottom: 2.3vmin;
   }
 
+  .lg\:mb-0 {
+    margin-bottom: 0px;
+  }
+
   .lg\:aspect-\[2\/1\] {
     aspect-ratio: 2 / 1;
   }
@@ -2235,5 +2231,10 @@ img {
 
   .lg\:text-right {
     text-align: right;
+  }
+
+  .lg\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 }

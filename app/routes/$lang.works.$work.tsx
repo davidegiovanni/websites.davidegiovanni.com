@@ -2,7 +2,7 @@ import { json, LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/no
 import { Link, NavLink, Outlet, useCatch, useLoaderData, useLocation, useParams, useSubmit, useTransition } from "@remix-run/react";
 import { safeGet } from "~/utils/safe-post";
 import { loadTranslations } from "~/helpers/i18n";
-import { Feed, FeedItem, WebPageModel, WebSectionModel } from "api/models";
+import { Feed, FeedItem, WebLinkModel, WebPageModel, WebSectionModel } from "api/models";
 import metadata from '~/utils/metadata'
 import link from '~/utils/links'
 import parse from 'html-react-parser'
@@ -177,7 +177,13 @@ export default function Index() {
   }
 
   const link = (number: number) => {
-    return sections[number].primaryLink
+    let link: WebLinkModel = {
+      title: sections[number].primaryLink.title,
+      url: ''
+    }
+    const rawLink = sections[number].primaryLink
+    link.url = rawLink.url.includes('websites.davidegiovanni.com') ? rawLink.url.replace('websites.davidegiovanni.com', '') : rawLink.url
+    return link
   }
 
   useEffect(() => {
@@ -206,7 +212,7 @@ export default function Index() {
           <Link to={`/${params.lang}/works`} prefetch="intent" className="px-4 py-2 rounded-[50%] border border-black absolute top-0 left-0 m-[2vmin] z-50">
               Tutti i siti
             </Link>
-          <div className="col-span-12 relative lg:col-span-6 flex items-center justify-center p-[2vmin]">
+          <div className="col-span-12 relative lg:col-span-6 flex items-center justify-center p-[2vmin] ">
             <div className="max-w-xl relative">
               <div>
               <Attachment attachment={{
@@ -219,8 +225,8 @@ export default function Index() {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-12 lg:h-screen">
-          <div className="col-span-12 lg:col-span-3 lg:col-start-9">
+        <div className="grid grid-cols-12 lg:h-screen p-[2vmin] mb-[50vh] lg:mb-0">
+          <div className="col-span-9 lg:col-span-3 lg:col-start-9">
             <p className="text-sm mb-[8vmin]">
               <span>{ currentWebsite.title}</span>
               <span>{ new Date(currentWebsite.date_published).getFullYear()}</span>
@@ -232,8 +238,8 @@ export default function Index() {
         </div>
         {
           sections.length > 0 && (
-            <div className="grid grid-cols-12 h-screen">
-              <div className="col-span-12 lg:col-span-3 lg:col-start-9">
+            <div className="grid grid-cols-12 h-screen p-[2vmin]">
+              <div className="col-span-9 col-start-3 lg:col-span-3 lg:col-start-9">
                 <p className="text-sm mb-[8vmin]">
                   {title(0)}
                 </p>
@@ -260,7 +266,7 @@ export default function Index() {
                   <div className="grid grid-cols-12">
                     {
                       title(index + 1) !== "" && (
-                        <h2 className="col-span-12 p-[2vmin]">
+                        <h2 className="text-sm lg:text-base col-span-12 p-[2vmin]">
                           {title(index + 1)}
                         </h2>
                       )
@@ -279,7 +285,7 @@ export default function Index() {
                     }
                     {
                       description(index + 1) !== "" && (
-                        <h3 className="col-span-12 lg:col-span-4 lg:col-start-7 p-[2vmin]">
+                        <h3 className="text-sm col-span-9 lg:col-span-4 col-start-2 lg:col-start-7 p-[2vmin]">
                           {description(index + 1)}
                         </h3>
                       )
@@ -290,7 +296,7 @@ export default function Index() {
             </div>
           )
         }
-      <div className="grid grid-cols-12 border-t border-black h-screen relative p-[2vmin] mt-[50vh]">
+      <div style={{ height: "calc(100vh - env(safe-area-inset-bottom))" }} className="grid grid-cols-12 border-t border-black relative p-[2vmin] mt-[50vh]">
         <Link to={`/${params.lang}/works`} prefetch="intent" className="px-4 py-2 rounded-[50%] border border-black absolute top-0 left-0 m-[2vmin] z-50">
           Tutti i siti
         </Link>
@@ -298,7 +304,7 @@ export default function Index() {
           <div>
           {
               hasPreviousWebsite && previousWebsite !== null && (
-                <Link to={`/${params.lang}/works/${getSlug(previousWebsite.id)}`} prefetch="intent" className="px-4 py-2 rounded-[50%] border border-black">
+                <Link to={`/${params.lang}/works/${getSlug(previousWebsite.id)}`} prefetch="intent" className="block px-4 py-2 rounded-[50%] border border-black">
                   Precedente
                 </Link>
               )
@@ -307,7 +313,7 @@ export default function Index() {
           <div>
             {
               hasNextWebsite && nextWebsite !== null && (
-                <Link to={`/${params.lang}/works/${getSlug(nextWebsite.id)}`} prefetch="intent" className="px-4 py-2 rounded-[50%] border border-black">
+                <Link to={`/${params.lang}/works/${getSlug(nextWebsite.id)}`} prefetch="intent" className="block px-4 py-2 rounded-[50%] border border-black">
                   Successivo
                 </Link>
               )

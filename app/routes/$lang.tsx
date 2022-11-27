@@ -2,7 +2,7 @@ import { json, LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/no
 import { Link, NavLink, Outlet, useCatch, useLoaderData, useLocation, useParams } from "@remix-run/react";
 import { safeGet } from "~/utils/safe-post";
 import { loadTranslations } from "~/helpers/i18n";
-import { Feed, FeedItem, WebPageModel, WebSectionModel } from "api/models";
+import { Feed, FeedItem, WebLinkModel, WebPageModel, WebSectionModel } from "api/models";
 import metadata from '~/utils/metadata'
 import link from '~/utils/links'
 import { fluidType } from '~/utils/helpers'
@@ -190,7 +190,15 @@ export default function Index() {
   }
 
   const link = (number: number) => {
-    return sections[number].primaryLink
+    let link = {
+      title: sections[number].primaryLink.title,
+      url: '',
+      type: ''
+    }
+    const rawLink = sections[number].primaryLink
+    link.url = rawLink.url.includes('websites.davidegiovanni.com') ? getPageSlug(rawLink.url) : rawLink.url
+    link.type = rawLink.url.includes('websites.davidegiovanni.com') ? 'inner' : 'external'
+    return link
   }
 
   const [currentTime, setCurrentTime] = useState('-------')
@@ -553,9 +561,17 @@ export default function Index() {
           <div className="col-span-10 lg:col-span-4 col-start-2 lg:col-start-7">
             {description(5)}
             <div className="max-w-sm w-fit h-fit relative px-8 py-4 mt-[8vmin] rounded-[50%]">
-              <Link to={`/${getPageSlug(link(5).url)}`} className="relative z-10">
+              {
+                link(5).type === "inner" ? (
+                  <Link to={`/${link(5).url}`} className="relative z-10">
                 { link(5).title}
               </Link>
+                ) : (
+                  <a href={link(5).url} className="relative z-10">
+                    { link(5).title}
+                  </a>
+                )
+              }
               <div className="bg-pink-500 blur-[6px] rounded-[50%] absolute inset-0 w-full h-full border border-black" />
             </div>
           </div>

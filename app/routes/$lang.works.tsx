@@ -10,10 +10,6 @@ import { Attachment } from "~/components/Attachment";
 import queryString from 'query-string'
 import { useEffect, useState } from "react";
 
-function getPageSlug(url: string) {
-  return url.replace('https://websites.davidegiovanni.com/', '')
-}
-
 export const links: LinksFunction = () => {
   return link(
     {

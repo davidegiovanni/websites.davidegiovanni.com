@@ -203,7 +203,7 @@ export default function Index() {
         ))}
       </div>
       <div>
-        <div className="fixed top-0 right-0 m-[2vmin]">
+        <div className="fixed top-0 right-0 m-[2vmin] z-50">
           {
             !currentWebsite.id.endsWith('other-websites') && (
             <a href={'https://' + getSlug(currentWebsite.id).split('-').join('.')} target="_blank" rel="noopener" className="px-4 py-2 rounded-[50%] border border-black">

@@ -233,7 +233,7 @@ export default function Index() {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-12 lg:h-screen p-[2vmin] mb-[25vh] lg:mb-0">
+        <div className="grid grid-cols-12 lg:h-screen p-[2vmin] mb-[2vmin] lg:mb-0">
           <div className="col-span-9 lg:col-span-3 lg:col-start-9">
             <p className="text-sm mb-[8vmin] w-full flex items-center justify-between">
               <span>{ currentWebsite.title}</span>
@@ -246,7 +246,7 @@ export default function Index() {
         </div>
         {
           sections.length > 0 && (
-            <div className="grid grid-cols-12 h-screen p-[2vmin]">
+            <div className="grid grid-cols-12 lg:h-screen p-[2vmin]">
               <div className="col-span-9 col-start-3 lg:col-span-3 lg:col-start-9">
                 <p className="text-sm mb-[8vmin]">
                   {title(0)}
@@ -260,8 +260,8 @@ export default function Index() {
         }
       </div>
         { currentWebsite.content_html !== "" && currentWebsite.content_html !== undefined &&
-          <div className="grid grid-cols-12 p-[2vmin] mb-[25vh]">
-              <article className="col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[4vmin] prose prose-sm prose-img:mx-0 prose-img:mb-0 prose-img:mt-[2vmin] prose-p:m-0 max-w-none prose-a:my-[1vmin] prose-a:no-underline text-black prose-a:text-black prose-a:w-fit prose-a:rounded-[50%] prose-a:block prose-a:px-4 prose-a:py-2 prose-a:border prose-a:border-black prose-hr:opacity-0">
+          <div className="grid grid-cols-12 p-[2vmin] mb-[2vmin] lg:mb-[25vh]">
+              <article className="col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[4vmin] prose prose-sm prose-img:mx-0 prose-img:mb-0 prose-img:mt-[2vmin] prose-p:m-0 max-w-none prose-a:my-[1vmin] prose-a:no-underline text-black prose-a:text-black prose-a:w-fit prose-a:rounded-[50%] prose-a:block prose-a:px-4 prose-a:py-2 prose-a:border prose-a:border-black prose-hr:hidden prose-hr:lg:block prose-hr:lg:opacity-0">
               {parse(currentWebsite.content_html)}
             </article>
           </div>

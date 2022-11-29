@@ -2349,6 +2349,10 @@ img {
   margin-top: 2vmin;
 }
 
+.prose-hr\:hidden :is(:where(hr):not(:where([class~="not-prose"] *))) {
+  display: none;
+}
+
 .prose-hr\:opacity-0 :is(:where(hr):not(:where([class~="not-prose"] *))) {
   opacity: 0;
 }
@@ -2465,6 +2469,10 @@ img {
     margin-bottom: 0px;
   }
 
+  .lg\:mb-\[25vh\] {
+    margin-bottom: 25vh;
+  }
+
   .lg\:flex {
     display: flex;
   }
@@ -2500,5 +2508,17 @@ img {
   .lg\:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
+  }
+
+  .lg\:first-line\:h-screen::first-line {
+    height: 100vh;
+  }
+
+  .prose-hr\:lg\:block :is(:where(hr):not(:where([class~="not-prose"] *))) {
+    display: block;
+  }
+
+  .prose-hr\:lg\:opacity-0 :is(:where(hr):not(:where([class~="not-prose"] *))) {
+    opacity: 0;
   }
 }

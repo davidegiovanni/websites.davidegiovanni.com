@@ -204,12 +204,16 @@ export default function Index() {
       </div>
       <div>
         <div className="fixed top-0 right-0 m-[2vmin]">
-          <p className="px-4 py-2 rounded-[50%] border border-black">
-          { getSlug(currentWebsite.id).split('-').join('.')}
-          </p>
+          {
+            !currentWebsite.id.endsWith('other-websites') && (
+            <a href={'https://' + getSlug(currentWebsite.id).split('-').join('.')} target="_blank" rel="noopener" className="px-4 py-2 rounded-[50%] border border-black">
+            { getSlug(currentWebsite.id).split('-').join('.')}
+            </a>
+            )
+          }
         </div>
         <div className="grid grid-cols-12 h-screen lg:sticky top-0 relative">
-          <Link to={`/${params.lang}/works`} prefetch="intent" className="px-4 py-2 rounded-[50%] border border-black absolute top-0 left-0 m-[2vmin] z-50">
+            <Link to={`/${params.lang}/works`} prefetch="intent" className="px-4 py-2 rounded-[50%] border border-black absolute top-0 left-0 m-[2vmin] z-50">
               Tutti i siti
             </Link>
           <div className="col-span-12 relative lg:col-span-6 flex items-center justify-center p-[2vmin] ">
@@ -225,9 +229,9 @@ export default function Index() {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-12 lg:h-screen p-[2vmin] mb-[50vh] lg:mb-0">
+        <div className="grid grid-cols-12 lg:h-screen p-[2vmin] mb-[25vh] lg:mb-0">
           <div className="col-span-9 lg:col-span-3 lg:col-start-9">
-            <p className="text-sm mb-[8vmin]">
+            <p className="text-sm mb-[8vmin] w-full flex items-center justify-between">
               <span>{ currentWebsite.title}</span>
               <span>{ new Date(currentWebsite.date_published).getFullYear()}</span>
             </p>
@@ -253,14 +257,14 @@ export default function Index() {
       </div>
         { currentWebsite.content_html !== "" && currentWebsite.content_html !== undefined &&
           <div className="grid grid-cols-12 p-[2vmin]">
-              <article className="col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[4vmin] prose prose-sm prose-img:m-0 prose-p:m-0 max-w-none text-black prose-a:text-[blue] prose-a:underline-offset-4 prose-blockquote:bg-gray-100 prose-blockquote:p-8 prose-blockquote:border-0 prose-blockquote:prose-p:first-of-type:before:opacity-0 prose-a:visited:text-[purple] prose-li:marker:text-[black] prose-hr:opacity-0">
+              <article className="col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[4vmin] prose prose-sm prose-img:m-0 prose-p:m-0 max-w-none prose-a:my-[1vmin] prose-a:no-underline text-black prose-a:text-black prose-a:w-fit prose-a:rounded-[50%] prose-a:block prose-a:px-4 prose-a:py-2 prose-a:border prose-a:border-black prose-blockquote:bg-gray-100 prose-blockquote:p-8 prose-blockquote:border-0 prose-blockquote:prose-p:first-of-type:before:opacity-0 prose-a:visited:text-[purple] prose-li:marker:text-[black] prose-hr:opacity-0">
               {parse(currentWebsite.content_html)}
             </article>
           </div>
         }
         {
           sections.length > 1 && (
-            <div className="mt-[50vh]">
+            <div className="mt-[25vh]">
               {
                  sections.slice(1).map((s, index) => (
                   <div className="grid grid-cols-12">
@@ -296,7 +300,7 @@ export default function Index() {
             </div>
           )
         }
-      <div style={{ height: "calc(100vh - env(safe-area-inset-bottom))" }} className="grid grid-cols-12 border-t border-black relative p-[2vmin] mt-[50vh]">
+      <div style={{ height: "calc(100vh - env(safe-area-inset-bottom))" }} className="grid grid-cols-12 border-t border-black relative p-[2vmin] mt-[25vh]">
         <Link to={`/${params.lang}/works`} prefetch="intent" className="px-4 py-2 rounded-[50%] border border-black absolute top-0 left-0 m-[2vmin] z-50">
           Tutti i siti
         </Link>

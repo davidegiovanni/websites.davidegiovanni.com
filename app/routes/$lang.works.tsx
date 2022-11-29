@@ -178,14 +178,18 @@ export default function Index() {
             <>
               <div className="col-span-12 lg:col-span-4 aspect-square flex items-center justify-center relative lg:border-r border-b border-black">
                 <p className="absolute mx-[1vmin] top-0 left-0">
-                  {getSlug(w.id).split('-').join('.')}
+                  { w.id.endsWith("other-websites") ? w.title : getSlug(w.id).split('-').join('.')}
                 </p>
                 <p className="absolute mx-[1vmin] top-0 right-0 text-right">
                   {new Date(w.date_published).getFullYear()}
                 </p>
-                <a href={'https://' + getSlug(w.id).split('-').join('.')} target="_blank" rel="noopener" className="absolute mx-[1vmin] bottom-0 left-0">
-                  Visit
-                </a>
+                {
+                  !w.id.endsWith("other-websites") && (
+                    <a href={'https://' + getSlug(w.id).split('-').join('.')} target="_blank" rel="noopener" className="absolute mx-[1vmin] bottom-0 left-0">
+                      Visit
+                    </a>
+                  )
+                }
                 <Link to={`/${params.lang}/works/${getSlug(w.id)}`} className="absolute mx-[1vmin] bottom-0 right-0 text-right">
                   Info
                 </Link>
@@ -198,7 +202,11 @@ export default function Index() {
                   }}></Attachment>
                 </div>
               </div>
-              <div className="col-span-12 lg:col-span-4 aspect-square flex items-center justify-center relative lg:border-r border-b border-black"></div>
+              {
+                index < websites.length - 1 && (
+                  <div className="hidden col-span-12 lg:col-span-4 aspect-square lg:flex items-center justify-center relative lg:border-r border-b border-black"></div>
+                )
+              }
             </>
           ))
         }

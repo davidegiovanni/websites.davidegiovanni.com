@@ -1482,6 +1482,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 50vh;
 }
 
+.mt-\[25vh\] {
+  margin-top: 25vh;
+}
+
+.mb-\[25vh\] {
+  margin-bottom: 25vh;
+}
+
 .block {
   display: block;
 }
@@ -2044,9 +2052,61 @@ img {
   line-height: 2rem;
 }
 
+.prose-a\:my-\[1vmin\] :is(:where(a):not(:where([class~="not-prose"] *))) {
+  margin-top: 1vmin;
+  margin-bottom: 1vmin;
+}
+
+.prose-a\:block :is(:where(a):not(:where([class~="not-prose"] *))) {
+  display: block;
+}
+
+.prose-a\:w-fit :is(:where(a):not(:where([class~="not-prose"] *))) {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.prose-a\:rounded-\[\] :is(:where(a):not(:where([class~="not-prose"] *))) {
+  border-radius: ;
+}
+
+.prose-a\:rounded-\[50\%\] :is(:where(a):not(:where([class~="not-prose"] *))) {
+  border-radius: 50%;
+}
+
+.prose-a\:border :is(:where(a):not(:where([class~="not-prose"] *))) {
+  border-width: 1px;
+}
+
+.prose-a\:border-black :is(:where(a):not(:where([class~="not-prose"] *))) {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
+}
+
+.prose-a\:px-4 :is(:where(a):not(:where([class~="not-prose"] *))) {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.prose-a\:py-2 :is(:where(a):not(:where([class~="not-prose"] *))) {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .prose-a\:text-\[blue\] :is(:where(a):not(:where([class~="not-prose"] *))) {
   --tw-text-opacity: 1;
   color: rgb(0 0 255 / var(--tw-text-opacity));
+}
+
+.prose-a\:text-black :is(:where(a):not(:where([class~="not-prose"] *))) {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+.prose-a\:no-underline :is(:where(a):not(:where([class~="not-prose"] *))) {
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
 }
 
 .prose-a\:underline-offset-4 :is(:where(a):not(:where([class~="not-prose"] *))) {
@@ -2203,6 +2263,10 @@ img {
 
   .lg\:mb-0 {
     margin-bottom: 0px;
+  }
+
+  .lg\:flex {
+    display: flex;
   }
 
   .lg\:aspect-\[2\/1\] {

@@ -152,6 +152,7 @@ export default function Index() {
   const loaderData = useLoaderData<LoaderData>();
   const params = useParams()
   const transition = useTransition()
+  const location = useLocation()
   const sections = loaderData.sections
   const currentWebsite = loaderData.currentWebsite
   const nextWebsite = loaderData.nextWebsite
@@ -195,19 +196,22 @@ export default function Index() {
   }, [currentWebsite]
   )
 
+  const isLoadingNewPage = transition.location !== undefined
+
   return (
-    <div className="overflow-y-auto bg-zinc-400 h-full w-full uppercase" id="scrollingDetail">
+    <div className={(isLoadingNewPage ? "opacity-0 " : "opacity-100 ") + "overflow-y-auto bg-zinc-400 h-full w-full uppercase transition-all duration-200 ease-in-out"} id="scrollingDetail">
       <div className="hidden grid-cols-12 gap-[2vmin] fixed inset-0 z-50 select-none pointer-events-none">
         { [0,1,2,3,4,5,6,7,8,9,10,11].map(n => (
           <div className="h-full bg-white opacity-25"></div>
         ))}
       </div>
-      <div>
-        <div className="fixed top-0 right-0 m-[2vmin] z-50">
+      <div className="fade-in relative z-[100]">
+        <div className="fixed top-0 right-0 m-[2vmin] z-[100]">
           {
             !currentWebsite.id.endsWith('other-websites') && (
-            <a href={'https://' + getSlug(currentWebsite.id).split('-').join('.')} target="_blank" rel="noopener" className="px-4 py-2 rounded-[50%] border border-black">
-            { getSlug(currentWebsite.id).split('-').join('.')}
+            <a href={'https://' + getSlug(currentWebsite.id).split('-').join('.')} target="_blank" rel="noopener" className="px-4 py-2 rounded-[50%] w-fit block relative">
+            <span className="relative z-10">{ getSlug(currentWebsite.id).split('-').join('.')}</span>
+            <div className="bg-white blur-[6px] rounded-[50%] absolute inset-0 w-full h-full border border-black" />
             </a>
             )
           }
@@ -256,15 +260,15 @@ export default function Index() {
         }
       </div>
         { currentWebsite.content_html !== "" && currentWebsite.content_html !== undefined &&
-          <div className="grid grid-cols-12 p-[2vmin]">
-              <article className="col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[4vmin] prose prose-sm prose-img:m-0 prose-p:m-0 max-w-none prose-a:my-[1vmin] prose-a:no-underline text-black prose-a:text-black prose-a:w-fit prose-a:rounded-[50%] prose-a:block prose-a:px-4 prose-a:py-2 prose-a:border prose-a:border-black prose-blockquote:bg-gray-100 prose-blockquote:p-8 prose-blockquote:border-0 prose-blockquote:prose-p:first-of-type:before:opacity-0 prose-a:visited:text-[purple] prose-li:marker:text-[black] prose-hr:opacity-0">
+          <div className="grid grid-cols-12 p-[2vmin] mb-[25vh]">
+              <article className="col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[4vmin] prose prose-sm prose-img:mx-0 prose-img:mb-0 prose-img:mt-[2vmin] prose-p:m-0 max-w-none prose-a:my-[1vmin] prose-a:no-underline text-black prose-a:text-black prose-a:w-fit prose-a:rounded-[50%] prose-a:block prose-a:px-4 prose-a:py-2 prose-a:border prose-a:border-black prose-hr:opacity-0">
               {parse(currentWebsite.content_html)}
             </article>
           </div>
         }
         {
           sections.length > 1 && (
-            <div className="mt-[25vh]">
+            <div>
               {
                  sections.slice(1).map((s, index) => (
                   <div className="grid grid-cols-12">
@@ -300,7 +304,7 @@ export default function Index() {
             </div>
           )
         }
-      <div style={{ height: "calc(100vh - env(safe-area-inset-bottom))" }} className="grid grid-cols-12 border-t border-black relative p-[2vmin] mt-[25vh]">
+      <div style={{ height: "calc(100vh - env(safe-area-inset-bottom))" }} className="grid grid-cols-12 border-t border-black relative p-[2vmin]">
         <Link to={`/${params.lang}/works`} prefetch="intent" className="px-4 py-2 rounded-[50%] border border-black absolute top-0 left-0 m-[2vmin] z-50">
           Tutti i siti
         </Link>

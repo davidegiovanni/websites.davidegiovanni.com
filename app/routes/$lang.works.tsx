@@ -1,5 +1,5 @@
 import { json, LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Link, NavLink, Outlet, useCatch, useLoaderData, useLocation, useParams } from "@remix-run/react";
+import { Link, NavLink, Outlet, useCatch, useLoaderData, useLocation, useParams, useTransition } from "@remix-run/react";
 import { safeGet } from "~/utils/safe-post";
 import { loadTranslations } from "~/helpers/i18n";
 import { Feed, FeedItem, WebPageModel, WebSectionModel } from "api/models";
@@ -119,6 +119,7 @@ export default function Index() {
   const loaderData = useLoaderData<LoaderData>();
   const params = useParams()
   const location = useLocation()
+  const transition = useTransition()
 
   const mainSection = loaderData.mainSection
   const sections = loaderData.sections
@@ -160,8 +161,11 @@ export default function Index() {
     () => {setTimeout(getTimeDate, 1000)}
   )
 
+  const isLoadingDetails = transition.location?.pathname.includes('works/')
+  const isLoadingHome = transition.location?.pathname.endsWith(params.lang as string)
+
   return (
-    <div className="overflow-y-auto bg-zinc-400 h-full w-full uppercase">
+    <div className={((isLoadingDetails || isLoadingHome) ? "opacity-0 " : "opacity-100 ")  + " overflow-y-auto bg-zinc-400 h-full w-full uppercase delay-100 transition-all duration-200 ease-in-out"}>
       <div className="hidden grid-cols-12 gap-[2vmin] fixed inset-0 z-50 select-none pointer-events-none">
         { [0,1,2,3,4,5,6,7,8,9,10,11].map(n => (
           <div className="h-full bg-white opacity-25"></div>
@@ -169,7 +173,7 @@ export default function Index() {
       </div>
       <div className="grid grid-cols-12">
         <div className="col-span-12 relative auto-rows-fr border-b border-black aspect-[4/1]">
-          <Link to={`/${params.lang}`} prefetch="intent" className="px-4 py-2 rounded-[50%] border border-black absolute top-0 left-0 m-[2vmin] z-50">
+          <Link to={`/${params.lang}`} prefetch="intent" className="px-4 py-2 rounded-[50%] border border-black absolute top-0 left-0 m-[2vmin] z-50 fade-in">
             Homepage
           </Link>
         </div>
@@ -177,23 +181,23 @@ export default function Index() {
           websites.map((w, index) => (
             <>
               <div className="col-span-12 lg:col-span-4 aspect-square flex items-center justify-center relative lg:border-r border-b border-black">
-                <p className="absolute mx-[1vmin] top-0 left-0">
+                <p className="absolute mx-[1vmin] top-0 left-0 fade-in">
                   { w.id.endsWith("other-websites") ? w.title : getSlug(w.id).split('-').join('.')}
                 </p>
-                <p className="absolute mx-[1vmin] top-0 right-0 text-right">
+                <p className="absolute mx-[1vmin] top-0 right-0 text-right fade-in">
                   {new Date(w.date_published).getFullYear()}
                 </p>
                 {
                   !w.id.endsWith("other-websites") && (
-                    <a href={'https://' + getSlug(w.id).split('-').join('.')} target="_blank" rel="noopener" className="absolute mx-[1vmin] bottom-0 left-0">
+                    <a href={'https://' + getSlug(w.id).split('-').join('.')} target="_blank" rel="noopener" className="absolute mx-[1vmin] bottom-0 left-0 fade-in">
                       Visit
                     </a>
                   )
                 }
-                <Link to={`/${params.lang}/works/${getSlug(w.id)}`} className="absolute mx-[1vmin] bottom-0 right-0 text-right">
+                <Link to={`/${params.lang}/works/${getSlug(w.id)}`} className="absolute mx-[1vmin] bottom-0 right-0 text-right fade-in">
                   Info
                 </Link>
-                <div className="w-1/2">
+                <div className="w-1/2 fade-in">
                   <Attachment attachment={{
                     id: "",
                     mediaType: "image/",

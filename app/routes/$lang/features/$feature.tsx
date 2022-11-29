@@ -1,11 +1,12 @@
 import { json, LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Link, NavLink, Outlet, useCatch, useLoaderData, useLocation, useParams } from "@remix-run/react";
+import { Link, NavLink, Outlet, useCatch, useLoaderData, useLocation, useNavigate, useParams, useTransition } from "@remix-run/react";
 import { safeGet } from "~/utils/safe-post";
 import { loadTranslations } from "~/helpers/i18n";
 import { Feed, FeedItem, WebPageModel, WebSectionModel } from "api/models";
 import metadata from '~/utils/metadata'
 import link from '~/utils/links'
 import parse from 'html-react-parser'
+import { useEffect, useState } from "react";
 
 export const links: LinksFunction = () => {
   return link(
@@ -103,17 +104,31 @@ export default function Index() {
   const params = useParams()
   const location = useLocation()
   const feature = loaderData.feature
+  const transition = useTransition()
+  const navigate = useNavigate()
+
+  const [isLoadingHome, setLoadingHome] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (isLoadingHome) {
+      setTimeout(() => {
+        navigate(`/${params.lang}`)
+      }, 900)
+    }
+  })
 
   return (
-    <div className="overflow-hidden bg-black bg-opacity-40 flex items-stretch justify-end h-full w-full p-[2vmin]">
-      <div className="relative w-full md:w-2/3 lg:w-1/2 max-w-2xl h-full flex items-stretch justify-end">
-        <div className="p-[2vmin] w-12 flex-none relative z-20">
-          <h1 className="uppercase text-2xl absolute top-0 right-0 -rotate-90 origin-bottom-right -translate-y-full -translate-x-2">
-            {feature.title} 
-            <Link to={`/${params.lang}`} className="mx-[2vmin] px-4 py-2 rounded-[50%] border border-black">
+    <div className={(isLoadingHome ? "bg-opacity-0 " : "bg-opacity-40 ") + "overflow-hidden bg-black flex items-stretch justify-end h-full w-full p-[2vmin] delay-700 transition-all duration-200"}>
+      <div className={(isLoadingHome ? "translate-x-[120%] " : "translate-x-0 ") + "relative w-full md:w-2/3 lg:w-1/2 max-w-2xl h-full flex items-stretch justify-end delay-100 transition-all duration-500"}>
+        <div className="p-[2vmin] w-16 flex-none relative z-20">
+          <div className="flex items-center whitespace-nowrap absolute top-0 right-0 -rotate-90 origin-bottom-right -translate-y-full -translate-x-0.5">
+            <h1 className="uppercase text-2xl">
+              {feature.title} 
+            </h1>
+            <button onClick={() => {setLoadingHome(true)}} className="mx-[2vmin] px-4 py-2 rounded-[50%] border border-black uppercase text-2xl">
               HOME
-            </Link>
-          </h1>
+            </button>
+          </div>
         </div>
         <div className="pr-[2vmin] py-[2vmin] pl-[1vmin] h-full overflow-y-auto relative z-20">
         { feature.content_html !== "" && feature.content_html !== undefined &&

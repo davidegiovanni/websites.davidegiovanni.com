@@ -49,7 +49,7 @@ export function Attachment(props: AttachmentProps) {
             srcSet={buildSrcset(props.attachment.url, "avif")}
           ></source>
           <img
-            srcSet={buildSrcset(props.attachment.url, "")}
+            srcSet={buildSrcset(props.attachment.url, "png")}
             sizes="(min-width: 1536px) 1536px, (min-width: 1280px) 1280px, (min-width: 1024px) 1024px, (min-width: 800px) 800px, 600px"
             src={props.attachment.url}
             className={(props.align) + " " + (props.size ? props.size : "object-cover ") + " relative z-10 h-full w-full"}

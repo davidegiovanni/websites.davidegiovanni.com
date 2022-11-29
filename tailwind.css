@@ -8,12 +8,6 @@ img {
     @apply select-none pointer-events-none
 }
 
-@media screen and (max-width: 767px) {
-    _::-webkit-full-page-media, _:future, :root .safari_only {
-        padding-bottom: 65px !important;
-    }
-}
-
 ::-webkit-scrollbar {
     width: 0;  /* Remove scrollbar space */
     background: transparent;  /* Optional: just make scrollbar invisible */
@@ -29,5 +23,38 @@ img {
     }
     50% {
       opacity: 0;
+    }
+  }
+
+  .blur-out {
+    animation: blurOut 2s cubic-bezier(0.4, 0, 0.6, 1) both;
+}
+
+@keyframes blurOut {
+    0% {
+      opacity: 1;
+      filter: blur(0);
+    }
+    50% {
+      opacity: 1;
+      filter: blur(0);
+    }
+    100% {
+        opacity: 0;
+        filter: blur(16px);
+    }
+  }
+
+
+  .fade-in {
+    animation: fadeIn 500ms cubic-bezier(0.4, 0, 0.6, 1) both;
+}
+
+@keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
   }

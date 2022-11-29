@@ -1,5 +1,5 @@
 import { json, LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Link, NavLink, Outlet, useCatch, useLoaderData, useLocation, useParams } from "@remix-run/react";
+import { Link, NavLink, Outlet, useCatch, useLoaderData, useLocation, useParams, useTransition } from "@remix-run/react";
 import { safeGet } from "~/utils/safe-post";
 import { loadTranslations } from "~/helpers/i18n";
 import { Feed, FeedItem, WebLinkModel, WebPageModel, WebSectionModel } from "api/models";
@@ -136,6 +136,7 @@ export default function Index() {
   const loaderData = useLoaderData<LoaderData>();
   const params = useParams()
   const location = useLocation()
+  const transition = useTransition()
 
   const mainSection = loaderData.mainSection
   const sections = loaderData.sections
@@ -201,7 +202,7 @@ export default function Index() {
     return link
   }
 
-  const [currentTime, setCurrentTime] = useState('-------')
+  const [currentTime, setCurrentTime] = useState<string>('-------')
 
   const getTimeDate = () => {
     var date = new Date();
@@ -212,11 +213,16 @@ export default function Index() {
   }
 
   useEffect(
-    () => {setTimeout(getTimeDate, 1000)}
+    () => {
+      setInterval(getTimeDate, 1000)
+    }, []
   )
 
+  const isLoadingDetails = transition.location?.pathname.includes('features')
+  const isLoadingWorks = transition.location?.pathname.includes('works')
+
   return (
-    <div className="overflow-y-auto bg-zinc-400 h-full w-full uppercase">
+    <div className={"overflow-y-auto bg-zinc-400 h-full w-full uppercase"}>
       {
         isOutletPageOpen && (
           <div className="fixed overflow-hidden inset-0 z-50">
@@ -224,6 +230,15 @@ export default function Index() {
           </div>
         )
       }
+      <div className={(isLoadingDetails ? "opacity-100 " : "opacity-0 pointer-events-none select-none ") + "fixed overflow-hidden inset-0 z-40 bg-black bg-opacity-40 flex items-stretch justify-end p-[2vmin]"}>
+        <div className={(isLoadingDetails ? "opacity-100 translate-x-none " : "opacity-0 translate-x-full ") + "h-full w-full md:w-2/3 lg:w-1/2 max-w-2xl bg-white rounded-3xl blur-sm delay-100 transition-all duration-200"}></div>
+      </div>
+      <div className={(isLoadingWorks ? "opacity-100 " : "opacity-0 pointer-events-none select-none ") + "fixed overflow-hidden inset-0 z-40 bg-zinc-400 transition-all duration-100 delay-100 ease-in-out"}>
+        <div className="w-full aspect-[4/1] border-b border-black" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-b border-black">
+          { [0,1,2].map(n => (<div className="aspect-square w-full border-r border-black last:border-none"></div>))}
+        </div>
+      </div>
       <div className="hidden grid-cols-12 gap-[2vmin] fixed inset-0 z-50 select-none pointer-events-none">
         { [0,1,2,3,4,5,6,7,8,9,10,11].map(n => (
           <div className="h-full bg-white opacity-25"></div>
@@ -511,7 +526,7 @@ export default function Index() {
           </div>
         </div>
       </div>
-      <div>
+      <div className={(isLoadingWorks ? "opacity-0 blur-lg " : "opacity-100 blur-0 ") + " transition-all duration-100 ease-in-out"}>
           <div className="p-[2vmin] aspect-[2/1]">
           <p className="uppercase max-w-2xl" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
           {title(1)}

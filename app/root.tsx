@@ -115,28 +115,18 @@ export default function App() {
 
   const favicon = loaderData.favicon || ""
 
-  function getLanguageName (lang: string) {
-    switch (lang) {
-      case 'it-IT':
-        return 'Italiano'
-      case 'en-US':
-        return 'English'
-      case 'fr-FR':
-        return 'Français'
-      case 'es-ES':
-        return 'Espanol'
-      case 'de-DE':
-        return 'Deutsch'
-      default:
-        break;
-    }
-  }
-
   const style = {
     "--customfont": loaderData.fontFamily,
-    fontFamily: loaderData.fontFamily,
-    backgroundColor: loaderData.primary,
+    fontFamily: loaderData.fontFamily
   }
+
+  const [isDisplayingLoader, setLoaderDisplay] = useState<boolean>(true)
+
+  useEffect(
+    () => {
+      setTimeout(() => {setLoaderDisplay(false)}, 2100)
+    }, []
+  )
 
   return (
     <html lang={loaderData.incomingLocale} className="bg-zinc-400">
@@ -149,8 +139,19 @@ export default function App() {
         <Links />
       </head>
       <body className="bg-zinc-400">
-        <div style={style} className="fixed inset-0 overflow-hidden">
-          <div className="w-full h-full overflow-hidden">
+        <div style={style} className="fixed inset-0 h-full w-full overflow-hidden z-50">
+          {
+            isDisplayingLoader && (
+              <div className="overflow-y-auto bg-zinc-400 h-full w-full uppercase flex items-center justify-center fixed inset-0 z-50 ">
+                <div className="blur-out">
+                  <h1 className=" uppercase max-w-lg text-center" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
+                    È il sito web che hai sempre sognato
+                  </h1>
+                </div>
+              </div>
+            )
+          }
+          <div className={(isDisplayingLoader ? "opacity-0 blur-lg " : "opacity-100 blur-0 ") + "w-full h-full transition-all duration-[1500ms]"}>
             <Outlet />
           </div>
         </div>

@@ -277,7 +277,7 @@ export default function Index() {
                     }
                     {
                       image(index + 1) !== "" && (
-                      <div className="col-span-12 aspect-[2/1] relative mb-[2vmin]">
+                      <div className="col-span-12 aspect-[2/1] relative">
                         <Attachment attachment={{
                           id: "",
                           mediaType: "image/",
@@ -289,7 +289,7 @@ export default function Index() {
                     }
                     {
                       description(index + 1) !== "" && (
-                        <h3 className="text-sm col-span-9 lg:col-span-4 col-start-2 lg:col-start-7 p-[2vmin]">
+                        <h3 className="text-sm col-span-9 lg:col-span-4 col-start-2 lg:col-start-7 p-[2vmin] mt-[2vmin]">
                           {description(index + 1)}
                         </h3>
                       )

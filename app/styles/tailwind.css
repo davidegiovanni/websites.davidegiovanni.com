@@ -1385,10 +1385,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   z-index: 30;
 }
 
-.z-\[\] {
-  z-index: ;
-}
-
 .z-\[100\] {
   z-index: 100;
 }
@@ -1478,20 +1474,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 48vmin;
 }
 
-.mb-\[25vh\] {
-  margin-bottom: 25vh;
-}
-
 .mb-\[8vmin\] {
   margin-bottom: 8vmin;
-}
-
-.mt-\[25vh\] {
-  margin-top: 25vh;
-}
-
-.mb-\[\] {
-  margin-bottom: ;
 }
 
 .block {
@@ -1554,14 +1538,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .h-screen {
   height: 100vh;
-}
-
-.h-auto {
-  height: auto;
-}
-
-.h-1 {
-  height: 0.25rem;
 }
 
 .w-full {
@@ -2202,31 +2178,6 @@ img {
   margin: 0px;
 }
 
-.prose-p\:mx-0 :is(:where(p):not(:where([class~="not-prose"] *))) {
-  margin-left: 0px;
-  margin-right: 0px;
-}
-
-.prose-p\:mt-0 :is(:where(p):not(:where([class~="not-prose"] *))) {
-  margin-top: 0px;
-}
-
-.prose-p\:mb-\[\] :is(:where(p):not(:where([class~="not-prose"] *))) {
-  margin-bottom: ;
-}
-
-.prose-p\:mb-\[2vmin\] :is(:where(p):not(:where([class~="not-prose"] *))) {
-  margin-bottom: 2vmin;
-}
-
-.prose-p\:mb-0 :is(:where(p):not(:where([class~="not-prose"] *))) {
-  margin-bottom: 0px;
-}
-
-.prose-p\:mt-\[2vmin\] :is(:where(p):not(:where([class~="not-prose"] *))) {
-  margin-top: 2vmin;
-}
-
 .prose-p\:leading-8 :is(:where(p):not(:where([class~="not-prose"] *))) {
   line-height: 2rem;
 }
@@ -2320,29 +2271,13 @@ img {
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
-.prose-img\:m-0 :is(:where(img):not(:where([class~="not-prose"] *))) {
-  margin: 0px;
-}
-
 .prose-img\:mx-0 :is(:where(img):not(:where([class~="not-prose"] *))) {
   margin-left: 0px;
   margin-right: 0px;
 }
 
-.prose-img\:mt-0 :is(:where(img):not(:where([class~="not-prose"] *))) {
-  margin-top: 0px;
-}
-
 .prose-img\:mb-0 :is(:where(img):not(:where([class~="not-prose"] *))) {
   margin-bottom: 0px;
-}
-
-.prose-img\:mb-\[\+\] :is(:where(img):not(:where([class~="not-prose"] *))) {
-  margin-bottom: +;
-}
-
-.prose-img\:mb-\[2vmin\] :is(:where(img):not(:where([class~="not-prose"] *))) {
-  margin-bottom: 2vmin;
 }
 
 .prose-img\:mt-\[2vmin\] :is(:where(img):not(:where([class~="not-prose"] *))) {
@@ -2351,10 +2286,6 @@ img {
 
 .prose-hr\:hidden :is(:where(hr):not(:where([class~="not-prose"] *))) {
   display: none;
-}
-
-.prose-hr\:opacity-0 :is(:where(hr):not(:where([class~="not-prose"] *))) {
-  opacity: 0;
 }
 
 @media (min-width: 768px) {
@@ -2508,10 +2439,6 @@ img {
   .lg\:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
-  }
-
-  .lg\:first-line\:h-screen::first-line {
-    height: 100vh;
   }
 
   .prose-hr\:lg\:block :is(:where(hr):not(:where([class~="not-prose"] *))) {

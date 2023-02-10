@@ -41,7 +41,6 @@ export const loader: LoaderFunction = async ({ request }) => {
     for (let j = 0; j < websitesFeedRes.items.length; j++) {
       const item = websitesFeedRes.items[j];
       const itemUrl = getSlug(item.id)
-      console.log('URLLRLRLLR', itemUrl)
       italianContents.push(`https://${host}/it-IT/${directoryUrl.includes('portfolio') ? "works" : "features"}/${itemUrl}`)
     }
   }
@@ -57,35 +56,41 @@ export const loader: LoaderFunction = async ({ request }) => {
     return defaultWebsiteRes.languageCodes.filter((l: any) => l !== locale)
   }
 
-  const content = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  ${locales.map((l: any) => (
-  `<url>
-    <loc>https://${host}/${l}</loc>
-    <lastmod>2022-01-01T00:00:00+01:00</lastmod>${getAlternateLocales(l).map(al => (`
-    <xhtml:link
-                rel="alternate"
-                hreflang="${al}"
-                href="https://${host}/${al}"/>`)).toString().split(',').join('')}
-    <priority>1.0</priority>
-  </url>`)).toString().split(',').join('')
-  }
-  ${locales.map((l: any) => (pages[l]).map((p: any) => (
-    `<url>
-      <loc>https://${host}/${p}</loc>
-      <lastmod>2022-01-01T00:00:00+01:00</lastmod>
-      <priority>1.0</priority>
-    </url>`)).toString().split(',').join('')
-  )}
-  ${
-    italianContents.map((c: string) => (
-      `<url>
-        <loc>${c}</loc>
-        <lastmod>2022-01-01T00:00:00+01:00</lastmod>
-        <priority>1.0</priority>
-      </url>`)).toString().split(',').join('')
-  }
+  const pagesList = locales.map((l: any) => (pages[l])?.map((p: any) =>
+`<url>
+  <loc>https://${host}/${p}</loc>
+  <lastmod>2022-01-01T00:00:00+01:00</lastmod>
+  <priority>1.0</priority>
+</url>
+`).join("")
+)
+
+const indexesList = locales.map((l: any) =>
+`<url>
+  <loc>https://${host}/${l}</loc>
+  <lastmod>2022-01-01T00:00:00+01:00</lastmod>
+  <priority>1.0</priority>
+</url>
+`).join("")
+
+const italianContentsList = italianContents.map((c: string) =>
+`<url>
+  <loc>${c}</loc>
+  <lastmod>2022-01-01T00:00:00+01:00</lastmod>
+  <priority>1.0</priority>
+</url>`
+).join("")
+
+const content = 
+`<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+${indexesList}
+${pagesList}
+${italianContentsList}
 </urlset>
 `.trim()
 

@@ -6,12 +6,12 @@ export const loader: LoaderFunction = ({ request }) => {
 
   let websiteName = host;
 
-  const robotText = `
-    User-agent: *
-    Allow: /
+  const robotText = 
+`User-agent: *
+Allow: /
 
-    Sitemap: https://${websiteName}/sitemap.xml
-    `
+Sitemap: https://${websiteName}/sitemap.xml
+`
   // return the text content, a status 200 success response, and set the content type to text/plain 
   return new Response(robotText, {
     status: 200,

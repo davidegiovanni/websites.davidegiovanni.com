@@ -1,9 +1,10 @@
-import { Attachment } from "api/models";
-import { useEffect } from "react";
+
+import { useEffect, useState } from "react";
+import { Attachment as AttachmentType } from "~/models";
 
 
 type AttachmentProps = {
-  attachment: Attachment;
+  attachment: AttachmentType;
   align?: string;
   size?: string;
   dimensions?: string;
@@ -23,36 +24,47 @@ export function Attachment(props: AttachmentProps) {
 
   let isLoadingLazy = true
 
+  const [isLoaded, setIsLoaded] = useState<boolean>(false)
+
   useEffect(() => {
     const image = document.getElementById(id) as HTMLElement
-    const top = image.getBoundingClientRect().top
+    const imageElement = document.getElementById(`src-${id}`) as HTMLImageElement
+    const top = image === null ? 0 : image.getBoundingClientRect().top
 
+    if (imageElement.complete) {
+      setIsLoaded(true)
+    } else {
+      imageElement.onload = function() {
+        setIsLoaded(true)
+      };
+    }
     if (top > 0 && top < window.innerHeight) {
       isLoadingLazy = false
     }
   })
 
   return (
-    <figure id={props.attachment.id} className="w-full h-full relative" role="figure">
+    <figure id={id} className="w-full h-full relative" role="figure">
       {props.attachment.mediaType.startsWith("image/") && (
         <picture id={id} className="h-full w-full">
           <source
-            className={(props.align) + " " + (props.size ? props.size : "object-cover ") + " relative z-10 h-full w-full"}
+            className={(props.align) + " " + (props.size ? props.size : "object-contain ") + " relative z-10 h-full w-full"}
             type="image/webp"
             sizes="(min-width: 1536px) 1536px, (min-width: 1280px) 1280px, (min-width: 1024px) 1024px, (min-width: 800px) 800px, 600px"
             srcSet={buildSrcset(props.attachment.url, "webp")}
           ></source>
           <source
-            className={(props.align) + " " + (props.size ? props.size : "object-cover ") + " relative z-10 h-full w-full"}
+            className={(props.align) + " " + (props.size ? props.size : "object-contain ") + " relative z-10 h-full w-full"}
             type="image/avif"
             sizes="(min-width: 1536px) 1536px, (min-width: 1280px) 1280px, (min-width: 1024px) 1024px, (min-width: 800px) 800px, 600px"
             srcSet={buildSrcset(props.attachment.url, "avif")}
           ></source>
           <img
-            srcSet={buildSrcset(props.attachment.url, "png")}
+          id={`src-${id}`}
+            srcSet={buildSrcset(props.attachment.url, "")}
             sizes="(min-width: 1536px) 1536px, (min-width: 1280px) 1280px, (min-width: 1024px) 1024px, (min-width: 800px) 800px, 600px"
             src={props.attachment.url}
-            className={(props.align) + " " + (props.size ? props.size : "object-cover ") + " relative z-10 h-full w-full"}
+            className={(props.align) + " " + (props.size ? props.size : "object-contain ") + " relative z-10 h-full w-full"}
             alt={props.attachment.description}
             loading={isLoadingLazy ? "lazy" : "eager"}
             decoding="async"
@@ -69,6 +81,12 @@ export function Attachment(props: AttachmentProps) {
           allowFullScreen
         ></iframe>
       )}
+      {
+        !isLoaded && (
+          <div className="image-loader">
+          </div>
+        )
+      }
     </figure>
   );
 }

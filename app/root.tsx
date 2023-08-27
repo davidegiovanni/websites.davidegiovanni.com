@@ -1,239 +1,367 @@
-import { useEffect, useState } from "react";
-import {
-  createCookie,
-  ErrorBoundaryComponent,
-  json,
-  LinksFunction,
-  LoaderFunction,
-  MetaFunction,
-  redirect,
-} from "@remix-run/node";
+import { cssBundleHref } from "@remix-run/css-bundle";
+import { LoaderFunction, json, redirect, type LinksFunction, type V2_MetaFunction } from "@remix-run/node";
 import {
   Link,
   Links,
   LiveReload,
   Meta,
+  NavLink,
   Outlet,
   Scripts,
   ScrollRestoration,
-  useCatch,
+  isRouteErrorResponse,
   useLoaderData,
-  useLocation,
-  useMatches,
-  useParams,
+  useNavigation,
+  useRouteError,
 } from "@remix-run/react";
+import { DynamicLinks } from "./utils/dynamic-links";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 import tailwind from "./styles/tailwind.css"
-import { loadTranslations, fallbackLocale, getMatchingLocale } from "./helpers/i18n";
-import { fluidType } from "./utils/helpers";
-import { safeGet } from "./utils/safe-post";
-import { WebLinkModel } from "api/models";
+import defaultCss from "./default.css";
+import { website, page, safeGetWebsite } from "./api";
+import { Website, Page } from "./models";
+import { createMouseFollower, fluidType, getContrast, isExternalLink } from "./utils/helpers";
+import { Attachment } from "./components/Attachment";
 
-export const links: LinksFunction = () => {
+export const links: LinksFunction = () => [
+  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  {
+    rel: "stylesheet",
+    href: tailwind,
+  },
+  {
+    rel: "stylesheet",
+    href: defaultCss,
+  },
+];
+
+export const meta: V2_MetaFunction = () => {
   return [
-    { rel: "stylesheet", href: tailwind }
+    {
+      name: "twitter:card",
+      content:
+        "summary_large_image",
+    },
   ];
 };
 
-export const meta: MetaFunction = ({data}) => {
-  return {
-    'twitter:card': 'summary_large_image'
-  };
-};
-
-const i18nKeys = [] as const;
-type I18nKeys = typeof i18nKeys[number];
-
 type LoaderData = {
-  i18n: Record<any, any>;
-  primary: string;
-  secondary: string;
+  primaryColor: string;
   favicon: string;
+  links: {
+    title: string;
+    url: string;
+    isExternal: boolean;
+  }[];
   incomingLocale: string;
-  navbarLinks: WebLinkModel[];
-  locales: string[];
-  font: string;
+  locales: { code: string; title: string; }[];
+  fontUrl: string;
   fontFamily: string;
+  logoUrl: string;
+  cursor: string;
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const incomingLocale = params.lang || ""
-  let url = new URL(request.url)
-  const host = (url.host.includes('localhost') || url.host.includes('192.168')) ? 'websites.davidegiovanni.com' : url.host
+
+  function getLanguageName(lang: string) {
+    switch (lang) {
+      case 'it-IT':
+        return 'Italiano'
+      case 'en-US':
+        return 'English'
+      case 'fr-FR':
+        return 'Français'
+      case 'es-ES':
+        return 'Espanol'
+      case 'de-DE':
+        return 'Deutsch'
+      default:
+        return "";
+    }
+  }
+
+  let links: {
+    title: string;
+    url: string;
+    isExternal: boolean;
+  }[] = []
+  let locales: {
+    code: string;
+    title: string;
+  }[] = []
 
   if (incomingLocale === "") {
-    const [defaultWebsiteRes, defaultWebsiteErr] = await safeGet<any>(request, `https://cdn.revas.app/websites/v0/websites/${host}?public_key=01exy3y9j9pdvyzhchkpj9vc5w`)
-    if (defaultWebsiteErr !== null) {
-      throw new Response(`${defaultWebsiteErr.message} ${defaultWebsiteErr.code}`, {
+    await safeGetWebsite(request, params, "");
+    return
+  }
+
+  let websiteObject: Website = {} as Website
+  let languageCodes: string[] = []
+  const websiteRes = await safeGetWebsite(request, params, incomingLocale);
+  if (typeof websiteRes === "string") {
+    if (websiteRes === "error") {
+      throw new Response("Website not found", {
         status: 404,
       });
     }
-    const defaultLocale = defaultWebsiteRes.website.languageCode
-    return redirect(`/${defaultLocale}`)
+    return redirect(websiteRes)
+  }
+  if (typeof websiteRes !== "string") {
+    websiteObject = websiteRes.website
+    languageCodes = websiteRes.languageCodes
   }
 
-    const [initialWebsiteRes, initialWebsiteErr] = await safeGet<any>(request, `https://cdn.revas.app/websites/v0/websites/${host}?public_key=01exy3y9j9pdvyzhchkpj9vc5w&language_code=${incomingLocale}`)
-    if (initialWebsiteErr !== null) {
-      throw new Response(`${initialWebsiteErr.message} ${initialWebsiteErr.code}`, {
-          status: 404,
-        });
-    }
-  
-    const primary: string = initialWebsiteRes.website.theme.primaryColor
-    const secondary: string = initialWebsiteRes.website.theme.invertedPrimaryColor
-    const favicon: string = initialWebsiteRes.website.theme.faviconUrl
-  
-    const i18n = loadTranslations<I18nKeys>(incomingLocale, i18nKeys);
+  const primaryColor: string = websiteObject.theme.accentColor
 
-    const navbarLinks: WebLinkModel[] = initialWebsiteRes.website.headerNav.links
-    const locales: string[] = initialWebsiteRes.languageCodes.filter((l: string) => l !== params.lang)
-    const font = initialWebsiteRes.website.theme.fontFamilyUrl
-    const fontFamily = initialWebsiteRes.website.theme.fontFamily
+  const favicon = websiteObject.theme.iconUrl
+  const fontUrl = websiteObject.theme.fontFamilyUrl
+  const fontFamily = websiteObject.theme.fontFamily
+  const logoUrl = websiteObject.theme.logoUrl
 
-    const loaderData: LoaderData = {
-      i18n,
-      primary,
-      secondary,
-      favicon,
-      font,
-      incomingLocale,
-      navbarLinks,
-      locales,
-      fontFamily
+  links = websiteObject.navigation.map(l => {
+    return {
+      title: l.title,
+      url: l.url,
+      isExternal: isExternalLink(l.url)
     }
+  })
+  const availableLocales: string[] = languageCodes.filter((l: string) => l !== params.lang)
+  locales = availableLocales.map(al => {
+    return {
+      code: al,
+      title: getLanguageName(al)
+    }
+  })
+
+  const [pageRes, pageErr] = await page("index", params)
+  if (pageErr !== null) {
+    throw new Response(`Page do not exist: ${pageErr.message} ${pageErr.code}`, {
+      status: 404,
+    });
+  }
+
+  const pageObject: Page = pageRes.page
+
+  const cursor = pageObject.blocks[1].items[0].attachment?.url || ""
+
+
+  const loaderData: LoaderData = {
+    primaryColor,
+    favicon,
+    fontUrl,
+    incomingLocale,
+    links,
+    locales,
+    fontFamily,
+    logoUrl,
+    cursor
+  }
 
   return json(loaderData)
 };
 
 export default function App() {
-  const matches = useMatches();
-  const match = matches.find((match) => match.data && match.data.canonical);
-  const alternates = match?.data.alternates;
   const loaderData = useLoaderData<LoaderData>()
-  const canonical = match?.data.canonical;
-  const params = useParams()
+  const navigation = useNavigation();
 
-  const favicon = loaderData.favicon || ""
+  const [navigationStart, setNavigationStart] = useState<boolean>(false);
+  const [navigationEnd, setNavigationEnd] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (navigation.state === "loading") {
+      setNavigationStart(true);
+      setNavigationEnd(false);
+    }
+    if (navigation.state === "idle" && navigationStart) {
+      setNavigationEnd(true);
+      setNavigationStart(false);
+      setTimeout(() => {
+        setNavigationEnd(false);
+      }, 700);
+    }
+  }, [navigation.state]);
 
   const style = {
     "--customfont": loaderData.fontFamily,
-    fontFamily: loaderData.fontFamily
+    fontFamily: loaderData.fontFamily,
+    backgroundColor: loaderData.primaryColor,
+    color: getContrast(loaderData.primaryColor)
   }
 
-  const [isDisplayingLoader, setLoaderDisplay] = useState<boolean>(true)
+  const [isMenuOpen, toggleMenuOpen] = useState<boolean>(false)
+  const followerDivRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const supportsHover = window.matchMedia("(hover: hover)").matches;
+
+    if (!supportsHover || !followerDivRef.current) {
+      return; // Exit the useEffect hook if hover is not supported or the ref is not available
+    }
+
+    if (followerDivRef.current) {
+      createMouseFollower(followerDivRef.current);
+    }
+  }, []);
+
+  const [currentTime, setCurrentTime] = useState('✻☯︎')
+
+  const getTimeDate = () => {
+    var date = new Date();
+    var current_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    var current_time = `${date.getHours() < 10 ? '0' : ''}${date.getHours()}` + ":" + `${date.getMinutes() < 10 ? '0' : ''}${date.getMinutes()}` + ":" + `${date.getSeconds()}${date.getSeconds() < 10 ? '0' : ''}`;
+    var date_time = current_date + " ✶ " + current_time;
+    setCurrentTime(date_time)
+  }
 
   useEffect(
-    () => {
-      setTimeout(() => {setLoaderDisplay(false)}, 2100)
-    }, []
+    () => { setTimeout(getTimeDate, 1000) }
   )
 
   return (
-    <html lang={loaderData.incomingLocale} className="bg-zinc-400">
-      <head>
+    <Document lang={loaderData.incomingLocale} favicon={loaderData.favicon} fontUrl={loaderData.fontUrl}>
+      <div style={style} className="root-layout cursor-none">
+        {(navigationStart || navigationEnd) && (
+            <div
+              data-navigation-start={navigationStart}
+              data-navigation-end={navigationEnd}
+              className="loading-bar"
+            />
+          )}
+          <nav data-open={isMenuOpen} className="hidden data-[open=true]:block fixed inset-0 z-[80]">
+            <p>
+              Copyright © <a href="https://davidegiovanni.com" target={'_blank'} rel="noopener">Davide Giovanni Steccanella </a>
+            </p>
+            <p>
+            {currentTime}
+          </p>
+            <ul>
+                {loaderData.links.map((link, index) => (
+                <li key={index} onClick={() => toggleMenuOpen(false)}>
+                  {
+                    link.isExternal ? (
+                      <a href={link.url}>
+                        {link.title}
+                      </a>
+                    ) : (
+                      <NavLink to={link.url} className={({ isActive }) =>
+                        `${isActive ? "" : ""} `
+                      }>
+                        {link.title}
+                      </NavLink>
+                    )
+                  }
+                </li>
+              ))}
+            </ul>
+          </nav>
+          { loaderData.logoUrl !== "" && (
+            <Attachment attachment={{
+              mediaType: "image/*",
+              url: loaderData.logoUrl,
+              description: "Davide Giovanni Steccanella",
+              metadata: {}
+          }} />
+          )}
+          <button onClick={() => toggleMenuOpen(!isMenuOpen)} className="fixed top-0 mx-auto hidden">
+            { isMenuOpen ? "Chiudi" : "Menu"}
+          </button>
+          <Outlet />
+      </div>
+      <CustomCursor cursor={loaderData.cursor} followerDivRef={followerDivRef} />
+    </Document>
+  );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  const isErrorBig = isRouteErrorResponse(error)
+
+  return (
+    <Document lang={"en-US"} favicon={""} fontUrl={""}>
+      <div className="fixed inset-0 overflow-hidden bg-[#0827F5] text-white p-2 selection:bg-yellow-500 selection:text-white">
+        <div className="w-full h-full overflow-hidden safari-only">
+          <h1 style={{ fontSize: fluidType(32, 120, 300, 2400, 1.5).fontSize, lineHeight: fluidType(24, 100, 300, 2400, 1.5).lineHeight }}>
+            Error ಥ_ಥ
+          </h1>
+          <p className="text-white my-4">
+            {isErrorBig && (
+              <>
+                {error.status} {error.statusText}
+              </>
+            )}
+            {!isErrorBig && error instanceof Error && (
+              <>
+                {error.message} {error.name}
+              </>
+            )}
+          </p>
+          <Link to={'/'} className="block underline mb-4 text-white" reloadDocument>
+            Go to homepage
+          </Link>
+          <img src="https://c.tenor.com/1zi9Ppr4YDsAAAAj/travolta-lost.gif" alt="" />
+        </div>
+      </div>
+    </Document>
+  );
+}
+
+function Document(props: { children: ReactNode; lang: string; favicon: string; fontUrl: string; }) {
+  return (
+    <html>
+      <head lang={props.lang}>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
-        {!!canonical && <link rel="canonical" href={canonical} />}
-        {!!favicon && <link rel="icon" type="image/x-icon" href={favicon}></link>}
+        <link rel="icon" type="image/x-icon" href={props.favicon} />
         <Links />
+        <DynamicLinks />
       </head>
-      <body className="bg-zinc-400">
-        <div style={style} className="fixed inset-0 h-full w-full overflow-hidden z-50">
-          {
-            isDisplayingLoader && (
-              <div className="overflow-y-auto bg-zinc-400 h-full w-full uppercase flex items-center justify-center fixed inset-0 z-50 ">
-                <div className="blur-out">
-                  <h1 className=" uppercase max-w-lg text-center" style={{ fontSize: fluidType(24, 48, 300, 2400, 1.5).fontSize, lineHeight: fluidType(16, 40, 300, 2400, 1.5).lineHeight }}>
-                    È il sito web che hai sempre sognato
-                  </h1>
-                </div>
-              </div>
-            )
-          }
-          <div className={(isDisplayingLoader ? "opacity-0 blur-lg " : "opacity-100 blur-0 ") + "w-full h-full transition-all duration-[1500ms]"}>
-            <Outlet />
-          </div>
-        </div>
+      <body>
+        {props.children}
+        <Scripts />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link href={loaderData.font} rel="stylesheet"></link>
+        <link href={props.fontUrl} rel="stylesheet"></link>
         {process.env.NODE_ENV === "development" && <LiveReload />}
       </body>
     </html>
-  );
+  )
 }
 
-export function CatchBoundary() {
-  const caught = useCatch()
-
+function CustomCursor (props: { cursor: string, followerDivRef: React.RefObject<HTMLDivElement>} ) {
+  if (props.cursor === "") {
+    return (
+      <div ref={props.followerDivRef} className="cursor__default" />
+    )
+  }
   return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>(Ｔ▽Ｔ)</title>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <div className="fixed inset-0 overflow-hidden bg-[#0827F5] text-white p-2 selection:bg-white selection:text-white">
-          <div className="w-full h-full overflow-hidden safari-only">
-            <h1 style={{ fontSize: fluidType(32, 120, 300, 2400, 1.5).fontSize, lineHeight: fluidType(24, 100, 300, 2400, 1.5).lineHeight }}>
-              Error ಥ_ಥ
-            </h1>
-            <p className="text-white my-4">
-            {caught.status} {caught.data}
-            </p>
-            <Link to={'/'} className="block underline mb-4 text-white" reloadDocument>
-              Go to homepage
-            </Link>
-            <img src="https://c.tenor.com/1zi9Ppr4YDsAAAAj/travolta-lost.gif" alt="" />
-          </div>
-        </div>
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-        {process.env.NODE_ENV === "development" && <LiveReload />}
-      </body>
-    </html>
-  );
+    <div ref={props.followerDivRef} className="cursor__filled">
+      <img src={props.cursor} alt="Cursor" />
+    </div>
+  )
 }
 
-export function ErrorBoundary({ error }: { error: Error }) {
+function darkenColor(hexColor: string): string {
+  // Remove the '#' symbol if present
+  const sanitizedHex = hexColor.replace('#', '');
 
-  return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>(Ｔ▽Ｔ)</title>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-      <div className="fixed inset-0 overflow-hidden bg-[#0827F5] text-white p-2 selection:bg-yellow-500 selection:text-white">
-          <div className="w-full h-full overflow-hidden safari-only">
-            <h1 style={{ fontSize: fluidType(32, 120, 300, 2400, 1.5).fontSize, lineHeight: fluidType(24, 100, 300, 2400, 1.5).lineHeight }}>
-              Error ಥ_ಥ
-            </h1>
-            <p className="text-white my-4">
-              {error.message} {error.stack}
-            </p>
-            <Link to={'/'} className="block underline mb-4 text-white" reloadDocument>
-              Go to homepage
-            </Link>
-            <img src="https://c.tenor.com/1zi9Ppr4YDsAAAAj/travolta-lost.gif" alt="" />
-          </div>
-        </div>
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-        {process.env.NODE_ENV === "development" && <LiveReload />}
-      </body>
-    </html>
-  );
+  // Convert the hex color to RGB components
+  const r = parseInt(sanitizedHex.substring(0, 2), 16);
+  const g = parseInt(sanitizedHex.substring(2, 4), 16);
+  const b = parseInt(sanitizedHex.substring(4, 6), 16);
+
+  // Calculate the darker color by reducing each component by 50%
+  const darkerR = Math.max(r - Math.round(r * 0.5), 0);
+  const darkerG = Math.max(g - Math.round(g * 0.5), 0);
+  const darkerB = Math.max(b - Math.round(b * 0.5), 0);
+
+  // Convert the darker RGB components back to hex
+  const darkerHex = ((1 << 24) | (darkerR << 16) | (darkerG << 8) | darkerB).toString(16).slice(1);
+
+  return '#' + darkerHex;
 }

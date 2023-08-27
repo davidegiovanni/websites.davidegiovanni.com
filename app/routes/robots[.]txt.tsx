@@ -6,7 +6,7 @@ export const loader: LoaderFunction = ({ request }) => {
 
   let websiteName = host;
 
-  const robotText = 
+const robotText = 
 `User-agent: *
 Allow: /
 

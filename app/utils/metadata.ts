@@ -1,20 +1,60 @@
 export default ({ title, description, image, url, robots, type, theme, twitter } : { title:string, description:string, image:string, url:string, robots: string, type: string, theme?: string, twitter?: string }) => {
-  let meta: any = {
-    "og:type": type,
-    "og:url": url,
-    "og:title": title,
-    "og:description": description,
-    "og:image": image,
-    "twitter:title": title,
-    "twitter:description": description,
-    "twitter:image": image,
-    "title":  title,
-    "description": description,
-    "image": image,
-    "robots": robots,
-    "theme-color": theme ? theme : '#ffffff',
-    "twitter:card": twitter ? twitter : 'summary'
-  }
+  let meta: any[] = [
+    {
+      name: "og:type",
+      content: type
+    },
+    {
+      name: "og:url",
+      content: url
+    },
+    {
+      name: "og:title",
+      content: title
+    },
+    {
+      name: "og:description",
+      content: description
+    },
+    {
+      name: "og:image",
+      content: image
+    },
+    {
+      name: "twitter:title",
+      content: title
+    },
+    {
+      name: "twitter:description",
+      content: description
+    },
+    {
+      name: "twitter:image",
+      content: image
+    },
+    {
+      title
+    },
+    {
+      description
+    },
+    {
+      name: "robots",
+      content: robots
+    },
+    {
+      name: "theme-colo",
+      content: robots
+    },
+    {
+      name: "robots",
+      content: theme || '#ffffff'
+    },
+    {
+      name: "twitter:card",
+      content: twitter || 'summary'
+    },
+  ]
   
   return meta
 }

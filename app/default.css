@@ -1,0 +1,19 @@
+.root-layout {
+  @apply fixed inset-0 overflow-hidden
+}
+
+.loading-bar {
+    @apply absolute z-40 left-0 top-0 h-0.5 w-0 bg-black ease-in-out data-[navigation-end=true]:animate-end-loading data-[navigation-start=true]:animate-start-loading;
+  }
+
+.cursor__default {
+  @apply hidden xl:block fixed top-0 left-0 w-2 h-2 z-[1000] bg-black rounded-full pointer-events-none select-none origin-center cursor-none
+}
+
+.cursor__filled {
+  @apply hidden xl:block fixed top-0 left-0 w-12 h-12 z-[1000] pointer-events-none select-none origin-top-left cursor-none
+}
+
+.image-loader {
+  @apply absolute inset-0 mx-auto my-auto w-4 h-4 blur-md bg-black animate-pulsing
+}

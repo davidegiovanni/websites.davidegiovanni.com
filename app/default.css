@@ -17,3 +17,7 @@
 .image-loader {
   @apply absolute inset-0 mx-auto my-auto w-4 h-4 blur-md bg-black animate-pulsing
 }
+
+.col-layout__base-size {
+  @apply flex flex-col gap-4
+}

@@ -23,3 +23,7 @@ button {
   @apply cursor-none
 }
 
+iframe {
+  cursor: default !important;
+}
+

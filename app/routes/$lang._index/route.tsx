@@ -1,5 +1,5 @@
 import { json, LinksFunction, LoaderFunction, redirect, SerializeFrom } from "@remix-run/node";
-import { useLoaderData, V2_MetaFunction } from "@remix-run/react";
+import { Link, useLoaderData, V2_MetaFunction } from "@remix-run/react";
 import metadata from '~/utils/metadata'
 import { fromFeedItemToUIItem, fromPageSectionToUISection, safeGetFeed, safeGetPage, safeGetWebsite } from "~/api";
 import { BlockItem, Feed, Page, UIItem, UISection, Website } from "~/models";
@@ -62,6 +62,7 @@ type LoaderData = {
   image: string;
   sections: UISection[];
   items: UIItem[];
+  incomingLocale: string;
   meta: {
     title: string;
     description: string;
@@ -132,7 +133,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     image,
     meta,
     sections,
-    items
+    items,
+    incomingLocale
   }
 
   return json(loaderData)
@@ -215,7 +217,7 @@ export default function Index() {
                 <Dialog.Portal className="website-dialog--portal">
                   <Dialog.Overlay className="website-dialog--bg override" />
                   <Dialog.Content className="website-dialog--card override">
-                    <div className="col-layout__base-size override">
+                    <div className="column-layout__medium override">
                       <div className="dialog-card--info-section override">
                         <h2 className="dialog-card--info-section override">
                           {loaderData.items[websiteOpen].description}
@@ -226,10 +228,10 @@ export default function Index() {
                             {formattedUrl(loaderData.items[websiteOpen].slug)}
                           </a>
                           <p className="dialog-info-table--date override">{loaderData.items[websiteOpen].date_published}</p>
-                          <p className="dialog-info-table--details override">
+                          <Link to={`/${loaderData.incomingLocale}/websites/${loaderData.items[websiteOpen].slug}`} className="dialog-info-table--details group override">
                             Dettagli
-                            <ArrowRightIcon />
-                          </p>
+                            <ArrowRightIcon className="group-hover:translate-x-1 transition-al ease-in-out duration-500" />
+                          </Link>
                         </div>
                       </div>
                       <div className="dialog-info-section--loader override">
@@ -237,12 +239,12 @@ export default function Index() {
                           <p>Loading frame...</p>
                         )}
                       </div>
-                      <div data-hidden={loading} className="dialog-card--iframe-section override">
+                      <div data-hidden={loading} className="data-[hidden=true]:grid-bg dialog-card--iframe-section override">
                         <iframe 
                           data-hidden={loading}
                           onLoad={handleLoad}
                           onError={handleError}
-                          className="override"
+                          className="data-[hidden=true]:grid-bg override"
                           src={formattedUrl(loaderData.items[websiteOpen].slug)}></iframe>
                       </div>
                     </div>
@@ -260,9 +262,9 @@ export default function Index() {
                 )
               }
             </Dialog.Root>
-            <div id="webiste-image" onMouseLeave={() => resetTransforms(divRefs[index].current)} onMouseMove={(e: any) => handleMouseMove(e, divRefs[index])} ref={divRefs[index]} className="website-item--image override">
+            <Link to={`/${loaderData.incomingLocale}/websites/${item.slug}`} id="website-image" onMouseLeave={() => resetTransforms(divRefs[index].current)} onMouseMove={(e: any) => handleMouseMove(e, divRefs[index])} ref={divRefs[index]} className="website-item--image override">
               <Attachment size="object-cover" attachment={item.image}></Attachment>
-            </div>
+            </Link>
           </div>
         ))}
       </div>

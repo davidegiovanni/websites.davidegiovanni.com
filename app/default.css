@@ -1,5 +1,5 @@
 .root-layout {
-  @apply fixed inset-0 overflow-hidden
+  @apply fixed inset-0 overflow-hidden text-sm
 }
 
 .loading-bar {
@@ -18,6 +18,92 @@
   @apply absolute inset-0 mx-auto my-auto w-4 h-4 blur-md bg-black animate-pulsing
 }
 
-.col-layout__base-size {
-  @apply flex flex-col gap-4
+/* Layouts */
+
+.column-layout__extra-small {
+  @apply flex flex-col gap-0 data-[items-start]:items-start data-[items-end]:items-end data-[items-center]:items-center data-[items-stretch]:items-stretch data-[justify-start]:justify-start data-[justify-end]:justify-end data-[justify-center]:justify-center data-[justify-between]:justify-between;
+}
+
+.column-layout__small {
+  @apply flex flex-col gap-1 data-[items-start]:items-start data-[items-end]:items-end data-[items-center]:items-center data-[items-stretch]:items-stretch data-[justify-start]:justify-start data-[justify-end]:justify-end data-[justify-center]:justify-center data-[justify-between]:justify-between;
+}
+
+.column-layout__default {
+  @apply flex flex-col gap-2 data-[items-start]:items-start data-[items-end]:items-end data-[items-center]:items-center data-[items-stretch]:items-stretch data-[justify-start]:justify-start data-[justify-end]:justify-end data-[justify-center]:justify-center data-[justify-between]:justify-between;
+}
+
+.column-layout__medium {
+  @apply flex flex-col gap-4 data-[items-start]:items-start data-[items-end]:items-end data-[items-center]:items-center data-[items-stretch]:items-stretch data-[justify-start]:justify-start data-[justify-end]:justify-end data-[justify-center]:justify-center data-[justify-between]:justify-between;
+}
+
+.column-layout__large {
+  @apply flex flex-col gap-6 data-[items-start]:items-start data-[items-end]:items-end data-[items-center]:items-center data-[items-stretch]:items-stretch data-[justify-start]:justify-start data-[justify-end]:justify-end data-[justify-center]:justify-center data-[justify-between]:justify-between;
+}
+
+.row-layout__extra-small {
+  @apply flex gap-0 data-[items-start]:items-start data-[items-end]:items-end data-[items-center]:items-center data-[items-stretch]:items-stretch data-[justify-start]:justify-start data-[justify-end]:justify-end data-[justify-center]:justify-center data-[justify-between]:justify-between;
+}
+
+.row-layout__small {
+  @apply flex gap-1 data-[items-start]:items-start data-[items-end]:items-end data-[items-center]:items-center data-[items-stretch]:items-stretch data-[justify-start]:justify-start data-[justify-end]:justify-end data-[justify-center]:justify-center data-[justify-between]:justify-between;
+}
+
+.row-layout__default {
+  @apply flex gap-2 data-[items-start]:items-start data-[items-end]:items-end data-[items-center]:items-center data-[items-stretch]:items-stretch data-[justify-start]:justify-start data-[justify-end]:justify-end data-[justify-center]:justify-center data-[justify-between]:justify-between;
+}
+
+.row-layout__medium {
+  @apply flex gap-4 data-[items-start]:items-start data-[items-end]:items-end data-[items-center]:items-center data-[items-stretch]:items-stretch data-[justify-start]:justify-start data-[justify-end]:justify-end data-[justify-center]:justify-center data-[justify-between]:justify-between;
+}
+
+.row-layout__large {
+  @apply flex gap-6 data-[items-start]:items-start data-[items-end]:items-end data-[items-center]:items-center data-[items-stretch]:items-stretch data-[justify-start]:justify-start data-[justify-end]:justify-end data-[justify-center]:justify-center data-[justify-between]:justify-between;
+}
+
+.grid-layout__extra-small {
+  @apply grid grid-cols-1 gap-0 data-[cols="12"]:grid-cols-12 data-[cols="2"]:grid-cols-2 data-[cols="3"]:grid-cols-3 data-[cols="4"]:grid-cols-4 data-[cols="5"]:grid-cols-5 data-[cols="6"]:grid-cols-6 data-[cols="8"]:grid-cols-8;
+}
+
+.grid-layout__small {
+  @apply grid grid-cols-1 gap-1 data-[cols="12"]:grid-cols-12 data-[cols="2"]:grid-cols-2 data-[cols="3"]:grid-cols-3 data-[cols="4"]:grid-cols-4 data-[cols="5"]:grid-cols-5 data-[cols="6"]:grid-cols-6 data-[cols="8"]:grid-cols-8;
+}
+
+.grid-layout__default {
+  @apply grid grid-cols-1 gap-2 data-[cols="12"]:grid-cols-12 data-[cols="2"]:grid-cols-2 data-[cols="3"]:grid-cols-3 data-[cols="4"]:grid-cols-4 data-[cols="5"]:grid-cols-5 data-[cols="6"]:grid-cols-6 data-[cols="8"]:grid-cols-8;
+}
+
+.grid-layout__medium {
+  @apply grid grid-cols-1 gap-4 data-[cols="12"]:grid-cols-12 data-[cols="2"]:grid-cols-2 data-[cols="3"]:grid-cols-3 data-[cols="4"]:grid-cols-4 data-[cols="5"]:grid-cols-5 data-[cols="6"]:grid-cols-6 data-[cols="8"]:grid-cols-8;
+}
+
+.grid-layout__large {
+  @apply grid grid-cols-1 gap-6 data-[cols="12"]:grid-cols-12 data-[cols="2"]:grid-cols-2 data-[cols="3"]:grid-cols-3 data-[cols="4"]:grid-cols-4 data-[cols="5"]:grid-cols-5 data-[cols="6"]:grid-cols-6 data-[cols="8"]:grid-cols-8;
+}
+
+/* Container */
+
+.default-section__extra-small-size {
+  @apply p-1 data-[border=bottom]:border-b data-[border=top]:border-t;
+}
+
+.default-section__small-size {
+  @apply p-2 data-[border=bottom]:border-b data-[border=top]:border-t;
+}
+
+.default-section__base-size {
+  @apply p-4 data-[border=bottom]:border-b data-[border=top]:border-t;
+}
+
+.default-section__medium-size {
+  @apply p-6 data-[border=bottom]:border-b data-[border=top]:border-t;
+}
+
+/* Icons */
+
+.default-icon__base-size {
+  @apply h-6 w-6 stroke-current;
+}
+
+.default-icon__small-size {
+  @apply h-4 w-4 stroke-current;
 }

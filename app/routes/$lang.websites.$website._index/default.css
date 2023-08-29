@@ -1,0 +1,69 @@
+.page-layout {
+    @apply h-full w-full overflow-y-auto
+}
+
+.page-header {
+    @apply aspect-square lg:aspect-[3/1] w-full flex items-center justify-center p-4
+}
+
+.page-content--content {
+    @apply p-4 flex flex-col lg:flex-row gap-6 justify-between
+}
+
+.page-content--image__base-size {
+    @apply rounded-lg overflow-hidden w-full h-full object-cover bg-white pointer-events-auto hover:scale-[.99] active:scale-[.97] transition-all ease-in-out duration-500
+}
+
+.page-content--image-details-text__base-size {
+    @apply opacity-0 group-hover:opacity-100 text-black font-medium absolute inset-0 m-auto w-8 h-8 rounded-full bg-white backdrop-blur-xl flex items-center justify-center z-20 pointer-events-none transition-all ease-in-out duration-300
+}
+
+.page-content--image-details-text__base-size svg {
+    @apply group-hover:scale-110 delay-200
+}
+
+.page-content--blockquote__base-size {
+    @apply w-full h-full bg-white bg-opacity-50 p-4 lg:px-8 lg:py-16 rounded-lg flex
+}
+
+.page-content--blockquote__base-size p {
+    @apply w-4/5 mx-auto my-auto first-letter:text-5xl first-letter:float-left first-letter:pr-2 text-justify
+}
+
+.page-content--codeblock__base-size {
+    @apply font-bold
+}
+
+.page-content--description-section {
+    @apply self-start lg:sticky top-16 lg:w-1/4 w-full lg:max-w-sm flex-none
+}
+
+.description-section--list {
+    @apply border rounded-md
+}
+
+.description-section--list-item {
+    @apply p-2 border-b last:border-b-0 uppercase text-xs
+}
+
+.page-content--media-section {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 max-w-screen-lg
+}
+
+.media-section--item__large {
+    @apply col-span-1 lg:col-span-2 aspect-video overflow-hidden flex
+}
+.media-section--item__base {
+    @apply col-span-1 aspect-square overflow-hidden flex
+}
+
+.website-dialog--portal {
+    @apply fixed inset-0 p-4
+}
+.website-dialog--bg {
+    @apply data-[state=open]:animate-overlayShow fixed inset-0 bg-black
+}
+
+.website-dialog--card {
+    @apply data-[state=open]:animate-contentShow bg-white rounded-3xl w-full h-full max-w-[95%] lg:max-w-screen-xl mx-auto my-auto max-h-[95%] lg:max-h-[80vh] overflow-y-auto px-4 py-16 fixed inset-0 m-auto
+}

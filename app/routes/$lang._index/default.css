@@ -37,7 +37,7 @@
 }
 
 .website-dialog--card {
-    @apply data-[state=open]:animate-contentShow bg-white rounded-3xl w-full h-full max-w-[95%] xl:max-w-screen-xl mx-auto my-auto max-h-[95%] lg:max-h-[80%] overflow-y-auto px-4 py-16 fixed inset-0 m-auto
+    @apply data-[state=open]:animate-contentShow bg-white rounded-3xl w-full h-full max-w-[95%] xl:max-w-screen-xl mx-auto my-auto max-h-[95%] lg:max-h-[80%] overflow-hidden px-4 py-16 fixed inset-0 m-auto
 }
 
 .dialog-card--info-section {
@@ -45,7 +45,7 @@
 }
 
 .dialog-card--iframe-section {
-    @apply aspect-[9/16] border w-11/12 lg:aspect-video mx-auto lg:w-11/12 data-[hidden=false]:bg-white origin-top-left overflow-hidden shadow-2xl rounded-2xl
+    @apply aspect-[9/16] border w-full lg:aspect-video mx-auto lg:w-11/12 data-[hidden=false]:bg-white origin-top-left overflow-hidden shadow-2xl rounded-2xl
 }
 
 .dialog-card--iframe-section iframe {
@@ -60,7 +60,7 @@
     @apply text-justify
 }
 .dialog-info-section--loader {
-    @apply w-full max-w-screen-sm mx-auto h-8
+    @apply w-full max-w-screen-sm mx-auto h-3 lg:h-8
 }
 .dialog-info-section--loader p {
     @apply italic text-sm animate-pulse

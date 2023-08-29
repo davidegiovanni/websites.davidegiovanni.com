@@ -27,7 +27,7 @@
 }
 
 .page-content--blockquote__base-size p {
-    @apply w-4/5 mx-auto my-auto first-letter:text-5xl first-letter:float-left first-letter:pr-2 text-justify
+    @apply w-4/5 mx-auto my-auto first-letter:text-5xl first-letter:float-left first-letter:pr-2 lg:text-justify
 }
 
 .page-content--codeblock__base-size {
@@ -51,7 +51,7 @@
 }
 
 .media-section--item__large {
-    @apply col-span-1 lg:col-span-2 aspect-video overflow-hidden flex
+    @apply col-span-1 lg:col-span-2 aspect-video overflow-hidden flex columns-2 gap-2
 }
 .media-section--item__base {
     @apply col-span-1 aspect-square overflow-hidden flex

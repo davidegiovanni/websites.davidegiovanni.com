@@ -282,11 +282,9 @@ export default function Index() {
         <Link to={`/${loaderData.incomingLocale}`} aria-label="Go back" tabIndex={1} className="fixed top-0 left-0 bg-white bg-opacity-5 backdrop-blur-3xl z-40 m-4 hover:ring-1 hover:ring-offset-2 w-8 h-8 flex items-center justify-center rounded-full">
           <ChevronLeftIcon className="h-5 w-5" />
         </Link>
-        <div data-visible={clickedImage !== ""} className="hidden data-[visible=true]:block bg-black bg-opacity-50 fixed inset-0 z-40 overflow-hidden p-8">
-          <div onClick={() => setClickedImage("")} className="absolute inset-0 z-10" />
-          <div className="w-full h-full rounded-lg shadow-xl overflow-hidden relative z-20 animate-contentShow">
-            <img className="h-full w-full object-cover" src={clickedImage} alt="" />
-          </div>
+        <div data-visible={clickedImage !== ""} className="hidden data-[visible=true]:flex bg-black bg-opacity-50 fixed inset-0 z-40 overflow-hidden p-8">
+          <div onClick={() => setClickedImage("")} className="absolute inset-0 z-10 overflow-hidden" />
+            <img src={clickedImage} className="max-h-full m-auto rounded-lg shadow-xl overflow-hidden relative z-20 animate-contentShow" alt="" />
         </div>
         
       </div>
